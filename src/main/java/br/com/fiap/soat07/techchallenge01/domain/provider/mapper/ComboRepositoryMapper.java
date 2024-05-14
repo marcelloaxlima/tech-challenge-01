@@ -8,25 +8,24 @@ import br.com.fiap.soat07.techchallenge01.domain.entity.Combo;
 import br.com.fiap.soat07.techchallenge01.infra.repository.model.ComboModel;
 
 @Mapper (componentModel = "spring")
-
-public interface ComboRepositoryMapper {
+public abstract class ComboRepositoryMapper {
 	
-
+	@Autowired
+    public ProdutoRepositoryMapper produtoMapper;
 	
 	/**
 	 * To domain mapper
 	 * @param comboModel
 	 * @return {@link Combo}
 	 */
-	//@Mapping(target = "id", source = "person.id", 
-	//	      defaultExpression = "java(java.util.UUID.randomUUID().toString())")
-	Combo toDomain(ComboModel comboModel);
+	@Mapping(target = "produtos", defaultExpression = "java(produtoMapper.toDomain(source.getProdutos()))")
+	public abstract Combo toDomain(ComboModel comboModel);
 	
 	/**
 	 * To model mapper
 	 * @param combo
 	 * @return {@link ComboModel}
 	 */
-	ComboModel toModel(Combo combo);
+	public abstract ComboModel toModel(Combo combo);
 
 }

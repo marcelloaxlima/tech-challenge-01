@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.soat07.techchallenge01.application.mapper.ProdutoMapper;
@@ -136,7 +137,7 @@ public class ProdutoController {
               { @Content(mediaType = "application/json", schema = 
                 @Schema(implementation = ErrorResponse.class)) }) })
     @GetMapping
-    public ResponseEntity<List<ProdutoDTO>> getProdutos(Integer page, Integer size) {
+    public ResponseEntity<List<ProdutoDTO>> getProdutos(@RequestParam(required = true, defaultValue = "0") Integer page, @RequestParam(required = true, defaultValue = "10") Integer size) {
     	
     	Pageable pageable = PageRequest.of(page, size);
     	return ResponseEntity.ok(produtoUseCase.getPageable(pageable).stream().map(mapper::toDTO).toList());

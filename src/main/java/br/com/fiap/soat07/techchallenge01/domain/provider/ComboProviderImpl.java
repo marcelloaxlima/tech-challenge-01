@@ -8,7 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import br.com.fiap.soat07.techchallenge01.domain.entity.Combo;
+import br.com.fiap.soat07.techchallenge01.domain.provider.mapper.ClienteRepositoryMapper;
 import br.com.fiap.soat07.techchallenge01.domain.provider.mapper.ComboRepositoryMapper;
+import br.com.fiap.soat07.techchallenge01.domain.provider.mapper.ProdutoRepositoryMapper;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.ComboUseCase;
 import br.com.fiap.soat07.techchallenge01.infra.repository.ComboRepository;
 import br.com.fiap.soat07.techchallenge01.infra.repository.model.ComboModel;
@@ -20,11 +22,15 @@ public class ComboProviderImpl implements ComboUseCase {
 
 	private final ComboRepository repository;
 
-	private final ComboRepositoryMapper mapper;
+	private final ComboRepositoryMapper comboMapper;
+	
+	private final ClienteRepositoryMapper clienteMapper;
+	
+	private final ProdutoRepositoryMapper produtoMapper;
 
 	@Override
 	public Page<Combo> getPageable(Pageable pageable) {
-		return new PageImpl<>(repository.findAll(pageable).stream().map(mapper::toDomain).toList(), pageable,
+		return new PageImpl<>(repository.findAll(pageable).stream().map(comboMapper::toDomain).toList(), pageable,
 				repository.findAll(pageable).getNumberOfElements());
 
 	}
@@ -33,19 +39,30 @@ public class ComboProviderImpl implements ComboUseCase {
 	@Override
 	public Combo getById(long id) {
 		Optional<ComboModel> comboModel = this.repository.findById(id);
-		return mapper.toDomain(comboModel.orElseThrow(() -> new RuntimeException()));
+		return comboMapper.toDomain(comboModel.orElseThrow(() -> new RuntimeException()));
 	}
 
 	@Override
 	public Combo create(Combo combo) {
-		return mapper.toDomain(repository.save(mapper.toModel(combo)));
+		return comboMapper.toDomain(repository.save(comboMapper.toModel(combo)));
 	}
 
 	@Override
 	public Combo update(long id, Combo comboAtualizado) {
+		
 		Combo combo = getById(id);
-		return mapper.toDomain(
-				repository.save(ComboModel.builder().id(combo.getId()).nome(comboAtualizado.getNome()).build()));
+		if (null == combo) {
+			throw new RuntimeException(); //TODO Create a specific exception
+		}
+		ComboModel comboModel = ComboModel.builder()
+				.id(comboAtualizado.getId())
+				.nome(comboAtualizado.getNome())
+				.cliente( clienteMapper.toModel(comboAtualizado.getCliente()))
+				.produtos(comboAtualizado.getProdutos().stream().map(produtoMapper::toModel).toList())
+				.build();
+		
+		return comboMapper.toDomain(
+				repository.save(comboModel));
 	}
 
 	@Override
