@@ -1,0 +1,60 @@
+spring:
+  main:
+    allow-bean-definition-overriding: true
+    banner-mode: console
+  application:
+    name: tech-challenge-01
+  sql:
+    init:
+      continue-on-error: false
+      platform: mysql
+  data:
+    jpa:
+      repositories:
+        enabled: true
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    database: mysql
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        default_schema: public
+      
+application:
+  database:
+    username: ${DATABASE_USER_NAME:src/main/resources/database/secret-db-username}
+    password: ${DATABASE_USER_PASSWORD:src/main/resources/database/secret-db-password}
+    driver-class-name: ${DATABASE_DRIVER_CLASS_NAME:com.mysql.jdbc.Driver}
+    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/mydb}
+    platform: ${DATABASE_PLATFORM:org.hibernate.dialect.MySQL5InnoDBDialect}
+    
+info:
+  group-id: "br.com.fiap.soat07"
+  artifact-id: "tech-challenge-01"
+  version: "1.0.0"
+  java.version: "17.x"
+  
+server:
+  port: 8080
+  max-http-request-header-size: 24KB
+  servlet:
+    context-path: /tech-challenge-01
+  tomcat:
+    max-http-response-header-size: 24KB
+    
+
+logging:
+  group:
+    web: org.springframework.web, org.springframework.core.codec, org.springframework.http, 
+    spring: org.springframework.core.env
+    servlet: org.springframework.boot.web, org.apache.coyote, org.apache.catalina, org.apache.tomcat
+    data:  org.springframework.jdbc.core,  org.springframework.orm.jpa, org.hibernate
+    app: br.com.fiap.soat07.techchallenge01
+  level:
+    web: ${LOGGING_LEVEL_WEB:INFO}
+    spring: ${LOGGING_LEVEL_SPRING:INFO}
+    servlet: ${LOGGING_LEVEL_SERVLET:INFO}
+    data: ${LOGGING_LEVEL_DATA:INFO}
+    app: ${LOGGING_LEVEL_APP:INFO}   
