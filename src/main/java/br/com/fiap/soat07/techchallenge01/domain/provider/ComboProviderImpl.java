@@ -1,6 +1,7 @@
 package br.com.fiap.soat07.techchallenge01.domain.provider;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -58,11 +59,11 @@ public class ComboProviderImpl implements ComboUseCase {
 				.id(comboAtualizado.getId())
 				.nome(comboAtualizado.getNome())
 				.cliente( clienteMapper.toModel(comboAtualizado.getCliente()))
-				.produtos(comboAtualizado.getProdutos().stream().map(produtoMapper::toModel).toList())
+				.produtos(comboAtualizado.getProdutos().stream().map(produtoMapper::toModel).collect(Collectors.toSet()))
 				.build();
 		
 		return comboMapper.toDomain(
-				repository.save(comboModel));
+				repository.saveAndFlush(comboModel));
 	}
 
 	@Override

@@ -42,10 +42,21 @@ public class ProdutoProviderImpl implements ProdutoUseCase {
 	}
 
 	@Override
-	public Produto update(Long id, Produto itemAtualizado) {
-		Produto item = getById(id);
+	public Produto update(Long id, Produto produtoAtualizado) {
+		
+		Produto produto = getById(id);
+		if (produto == null) {
+			throw new RuntimeException(); //TODO create a specific exception
+		}
+		ProdutoModel produtoModel = ProdutoModel.builder()
+				.codigo(produtoAtualizado.getCodigo())
+				.id(produtoAtualizado.getId())
+				.nome(produtoAtualizado.getNome())
+				.tipoProduto(produtoAtualizado.getTipoProduto())
+				.valor(produtoAtualizado.getValor())
+				.build();
 		return mapper.toDomain(
-				repository.save(ProdutoModel.builder().id(item.getId()).nome(itemAtualizado.getNome()).build()));
+				repository.save(produtoModel));
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package br.com.fiap.soat07.techchallenge01.infra.repository.model;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -10,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
@@ -39,11 +39,10 @@ public class ComboModel {
 	private ClienteModel cliente;
 	
 	@ManyToMany(mappedBy = "combos")
-	private List<ProdutoModel> produtos;
+	private Set<ProdutoModel> produtos;
 	
-	@ManyToOne
-    @JoinColumn(name = "pedido_id", nullable = true)
-	private PedidoModel pedido;
+	@ManyToMany(mappedBy = "combos")
+	private Set<PedidoModel> pedidos;
 	
 
 }

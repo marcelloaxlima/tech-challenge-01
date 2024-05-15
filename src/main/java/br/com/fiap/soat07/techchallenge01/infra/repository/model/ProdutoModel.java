@@ -2,20 +2,23 @@ package br.com.fiap.soat07.techchallenge01.infra.repository.model;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import br.com.fiap.soat07.techchallenge01.domain.enumeration.TipoProdutoEnum;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,17 +46,20 @@ public class ProdutoModel {
 	
 	private BigDecimal valor;
 	
+	@Enumerated(EnumType.STRING)
 	private TipoProdutoEnum tipoProduto;
 	
-	@ManyToOne
-    @JoinColumn(name = "pedido_id", nullable = true)
-	private PedidoModel pedido;
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "pedido_produtos",
+    joinColumns = @JoinColumn(name = "produtoid"),
+    inverseJoinColumns = @JoinColumn(name = "pedidoid"))
+	private Set<PedidoModel> pedidos;
 	
-	@ManyToMany
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "combo_produtos",
     joinColumns = @JoinColumn(name = "produtoid"),
     inverseJoinColumns = @JoinColumn(name = "comboid"))
-	private List<ComboModel> combos;
+	private Set<ComboModel> combos;
 	
 
 }

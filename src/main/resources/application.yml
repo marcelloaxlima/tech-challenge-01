@@ -56,5 +56,5 @@ logging:
     web: ${LOGGING_LEVEL_WEB:INFO}
     spring: ${LOGGING_LEVEL_SPRING:INFO}
     servlet: ${LOGGING_LEVEL_SERVLET:INFO}
-    data: ${LOGGING_LEVEL_DATA:INFO}
+    data: ${LOGGING_LEVEL_DATA:DEBUG}
     app: ${LOGGING_LEVEL_APP:INFO}   

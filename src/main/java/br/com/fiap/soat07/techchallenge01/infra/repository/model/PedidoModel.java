@@ -13,6 +13,8 @@ import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -38,10 +40,13 @@ public class PedidoModel {
 	
 	private long nome;
 	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "combo_pedidos",
+    joinColumns = @JoinColumn(name = "pedidoid"),
+    inverseJoinColumns = @JoinColumn(name = "comboid"))
 	private List<ComboModel> combos;
 	
-	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+	@ManyToMany(mappedBy = "pedidos")
 	private List<ProdutoModel> produtos;
 
 	
