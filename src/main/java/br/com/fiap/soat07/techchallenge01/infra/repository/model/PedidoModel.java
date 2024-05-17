@@ -48,14 +48,9 @@ public class PedidoModel {
 	@Column(precision = 10, scale = 2)
     private BigDecimal valor;
 	
-	//@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST})
-    //@JoinTable(name = "combo_pedidos",
-    //joinColumns = @JoinColumn(name = "pedidoid"),
-    // = @JoinColumn(name = "comboid"))	
 	@ManyToMany(mappedBy = "pedidos")
 	private List<ComboModel> combos;
 	
-	//@ManyToMany(mappedBy = "pedidos", cascade = { CascadeType.MERGE, CascadeType.PERSIST})
 	@ManyToMany(cascade = { CascadeType.MERGE})
     @JoinTable(name = "pedido_produtos",
     joinColumns = @JoinColumn(name = "pedidoid", nullable = true, updatable = true),

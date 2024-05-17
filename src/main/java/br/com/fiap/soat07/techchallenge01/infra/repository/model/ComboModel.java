@@ -44,19 +44,13 @@ public class ComboModel {
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id", nullable = true, updatable = true)
 	private ClienteModel cliente;
-	
-	//@ManyToMany(mappedBy = "combos", cascade = {
-	//          CascadeType.MERGE, CascadeType.PERSIST
-	//      })            
+	      
     @ManyToMany(cascade = { CascadeType.MERGE})
     @JoinTable(name = "combo_produtos",
             joinColumns = @JoinColumn(name = "comboid", nullable = true, updatable = true),
             inverseJoinColumns = @JoinColumn(name = "produtoid", nullable = true, updatable = true))
 	private Set<ProdutoModel> produtos;
 	
-	//@ManyToMany(mappedBy = "combos", cascade = {
-	//		 CascadeType.MERGE, CascadeType.PERSIST
-	//      })    
     @ManyToMany(cascade = { CascadeType.MERGE})
     @JoinTable(name = "combo_pedidos",
     joinColumns = @JoinColumn(name = "comboid", nullable = true, updatable = true),

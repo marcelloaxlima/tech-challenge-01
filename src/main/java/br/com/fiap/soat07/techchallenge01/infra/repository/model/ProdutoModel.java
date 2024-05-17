@@ -54,17 +54,9 @@ public class ProdutoModel {
 	@Column
 	private TipoProdutoEnum tipoProduto;
 	
-	//@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST})
-    //@JoinTable(name = "pedido_produtos",
-    //joinColumns = @JoinColumn(name = "produtoid"),
-    //inverseJoinColumns = @JoinColumn(name = "pedidoid"))	
 	@ManyToMany(mappedBy = "produtos")
 	private Set<PedidoModel> pedidos;
 	
-	//@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST})
-    //@JoinTable(name = "combo_produtos",
-    //joinColumns = @JoinColumn(name = "produtoid"),
-    //inverseJoinColumns = @JoinColumn(name = "comboid"))
 	@ManyToMany(mappedBy = "produtos")
 	private Set<ComboModel> combos;
 	
