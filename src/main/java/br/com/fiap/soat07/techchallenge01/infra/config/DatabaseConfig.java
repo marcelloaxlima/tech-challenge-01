@@ -6,9 +6,12 @@ import java.io.IOException;
 
 import javax.sql.DataSource;
 
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -18,6 +21,9 @@ import lombok.Setter;
 @Setter
 @Configuration
 @ConfigurationProperties(prefix =  "application.database")
+@EntityScan("br.com.fiap.soat07.techchallenge01")
+@EnableJpaRepositories("br.com.fiap.soat07.techchallenge01")
+@EnableTransactionManagement
 public class DatabaseConfig {
 
 	private String url;	

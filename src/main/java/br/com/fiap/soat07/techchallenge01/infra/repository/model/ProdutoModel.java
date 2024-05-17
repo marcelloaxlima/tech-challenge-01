@@ -1,9 +1,11 @@
 package br.com.fiap.soat07.techchallenge01.infra.repository.model;
 
 import java.math.BigDecimal;
-import java.util.List;
+import java.time.OffsetDateTime;
 import java.util.Set;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import br.com.fiap.soat07.techchallenge01.domain.enumeration.TipoProdutoEnum;
@@ -30,11 +32,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PRODUTOS")
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "PRODUTOS")
 public class ProdutoModel {
 	
 	@Id
+	@Column(nullable = false, updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
@@ -44,22 +47,32 @@ public class ProdutoModel {
 	@Column(unique=true)
 	private String nome;
 	
+	@Column(precision = 10, scale = 2)
 	private BigDecimal valor;
 	
 	@Enumerated(EnumType.STRING)
+	@Column
 	private TipoProdutoEnum tipoProduto;
 	
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "pedido_produtos",
-    joinColumns = @JoinColumn(name = "produtoid"),
-    inverseJoinColumns = @JoinColumn(name = "pedidoid"))
+	//@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST})
+    //@JoinTable(name = "pedido_produtos",
+    //joinColumns = @JoinColumn(name = "produtoid"),
+    //inverseJoinColumns = @JoinColumn(name = "pedidoid"))	
+	@ManyToMany(mappedBy = "produtos")
 	private Set<PedidoModel> pedidos;
 	
-	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "combo_produtos",
-    joinColumns = @JoinColumn(name = "produtoid"),
-    inverseJoinColumns = @JoinColumn(name = "comboid"))
+	//@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST})
+    //@JoinTable(name = "combo_produtos",
+    //joinColumns = @JoinColumn(name = "produtoid"),
+    //inverseJoinColumns = @JoinColumn(name = "comboid"))
+	@ManyToMany(mappedBy = "produtos")
 	private Set<ComboModel> combos;
 	
+	@CreatedDate
+    @Column(nullable = false, updatable = false)
+    private OffsetDateTime dataCriacao;
 
+    @LastModifiedDate
+    @Column(nullable = false)
+    private OffsetDateTime ultimaModificacao;
 }
