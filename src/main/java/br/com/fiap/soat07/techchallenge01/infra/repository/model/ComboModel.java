@@ -1,11 +1,17 @@
 package br.com.fiap.soat07.techchallenge01.infra.repository.model;
 
-import java.util.List;
+import java.time.OffsetDateTime;
+import java.util.Set;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -24,26 +30,38 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "COMBOS")
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "COMBOS")
 public class ComboModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column
 	private String nome;
 	
-	@ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = true)
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id", nullable = true, updatable = true)
 	private ClienteModel cliente;
+	      
+    @ManyToMany(cascade = { CascadeType.MERGE})
+    @JoinTable(name = "combo_produtos",
+            joinColumns = @JoinColumn(name = "comboid", nullable = true, updatable = true),
+            inverseJoinColumns = @JoinColumn(name = "produtoid", nullable = true, updatable = true))
+	private Set<ProdutoModel> produtos;
 	
-	@ManyToMany(mappedBy = "combos")
-	private List<ProdutoModel> produtos;
+    @ManyToMany(cascade = { CascadeType.MERGE})
+    @JoinTable(name = "combo_pedidos",
+    joinColumns = @JoinColumn(name = "comboid", nullable = true, updatable = true),
+    inverseJoinColumns = @JoinColumn(name = "pedidoid", nullable = true, updatable = true))
+	private Set<PedidoModel> pedidos;
 	
-	@ManyToOne
-    @JoinColumn(name = "pedido_id", nullable = true)
-	private PedidoModel pedido;
-	
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private OffsetDateTime dataCriacao;
 
+    @LastModifiedDate
+    @Column(nullable = false)
+    private OffsetDateTime ultimaModificacao;
 }
