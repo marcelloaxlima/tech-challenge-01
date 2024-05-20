@@ -36,7 +36,7 @@ public class PedidoModel {
 	
 	private String codigo;
 	
-	private long nome;
+	private String nome;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<ComboModel> combos;
@@ -50,6 +50,13 @@ public class PedidoModel {
 		        .reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
-	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		if (nome == null || nome.isEmpty() || nome.isBlank())
+			throw new IllegalArgumentException("Obrigatório definir o nome do produto");
+		this.nome = nome.trim();
+	}
 
 }
