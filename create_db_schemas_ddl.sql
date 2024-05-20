@@ -20,3 +20,4 @@ alter table combo_produtos add constraint FKh1c032u7k7uo92vk4f4ct2eqv foreign ke
 alter table combos add constraint FK4apeeplru304fy0mq364qx4r8 foreign key (cliente_id) references clientes (id)
 alter table pedido_produtos add constraint FKmxbuag3gvejqw28rs0mq5uxub foreign key (produtoid) references produtos (id)
 alter table pedido_produtos add constraint FK59k0dlxipto1kdpismergyxq8 foreign key (pedidoid) references pedidos (id)
+alter table pedidos modify column status enum ('INICIADO','PAGO','PREPARO','PRONTO','FINALIZADO')
