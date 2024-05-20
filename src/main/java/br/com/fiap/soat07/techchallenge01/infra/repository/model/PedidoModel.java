@@ -9,10 +9,13 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.ObjectUtils;
 
+import br.com.fiap.soat07.techchallenge01.domain.enumeration.PedidoStatusEnum;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -43,7 +46,11 @@ public class PedidoModel {
 	private String codigo;
 	
 	@Column
-	private long nome;
+	private String nomeCliente;
+	
+	@Enumerated(EnumType.STRING)
+	@Column
+	private PedidoStatusEnum status;
 	
 	@Column(precision = 10, scale = 2)
     private BigDecimal valor;
