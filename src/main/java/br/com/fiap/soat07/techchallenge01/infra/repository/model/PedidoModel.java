@@ -50,9 +50,6 @@ public class PedidoModel {
 		        .reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
-	public String getNome() {
-		return nome;
-	}
 	public void setNome(String nome) {
 		if (nome == null || nome.isEmpty() || nome.isBlank())
 			throw new IllegalArgumentException("Obrigatório definir o nome do produto");
