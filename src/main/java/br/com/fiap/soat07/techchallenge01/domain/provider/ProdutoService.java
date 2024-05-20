@@ -1,19 +1,13 @@
 package br.com.fiap.soat07.techchallenge01.domain.provider;
 
-import br.com.fiap.soat07.techchallenge01.domain.entity.Pedido;
 import br.com.fiap.soat07.techchallenge01.domain.entity.Produto;
-import br.com.fiap.soat07.techchallenge01.domain.enumeration.TipoProdutoEnum;
 import br.com.fiap.soat07.techchallenge01.domain.provider.mapper.ProdutoRepositoryMapper;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.CreateProdutoUseCase;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.DeletePedidoUseCase;
-import br.com.fiap.soat07.techchallenge01.domain.usecase.ProdutoUseCase;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.UpdateProdutoUseCase;
 import br.com.fiap.soat07.techchallenge01.infra.repository.ProdutoRepository;
 import br.com.fiap.soat07.techchallenge01.infra.repository.model.ProdutoModel;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
