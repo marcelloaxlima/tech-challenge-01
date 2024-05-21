@@ -36,7 +36,7 @@ public class ProdutoService implements CreateProdutoUseCase, UpdateProdutoUseCas
 		if (id == null)
 			throw new IllegalArgumentException("Obrigatório informar o código do produto");
 
-		ProdutoModel itemModel = this.repository.findById(id).orElseThrow(() -> new ProdutoNotFoundException(id));;
+		ProdutoModel itemModel = this.repository.findById(id).orElseThrow(() -> new ProdutoNotFoundException(id));
 
 		return mapper.toDomain(
 				repository.save(
@@ -53,7 +53,7 @@ public class ProdutoService implements CreateProdutoUseCase, UpdateProdutoUseCas
 		if (id == null)
 			throw new IllegalArgumentException("Obrigatório informar o código do produto");
 
-		ProdutoModel itemModel = this.repository.findById(id).orElseThrow(() -> new ProdutoNotFoundException(id));;
+		ProdutoModel itemModel = this.repository.findById(id).orElseThrow(() -> new ProdutoNotFoundException(id));
 
 		repository.delete(itemModel);
 	}
