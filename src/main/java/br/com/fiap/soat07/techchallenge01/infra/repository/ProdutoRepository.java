@@ -14,12 +14,12 @@ public interface ProdutoRepository extends JpaRepository<ProdutoModel, Long> {
 
     @Override
     @Query(
-            value = "SELECT * FROM PEDIDOS p WHERE p.id = ?1",
+            value = "SELECT * FROM PRODUTOS p WHERE p.id = ?1",
             nativeQuery = true)
     Optional<ProdutoModel> findById(Long id);
 
     @Query(
-            value = "SELECT * FROM PEDIDOS p WHERE p.tipoProduto = ?1",
+            value = "SELECT * FROM PRODUTOS p WHERE p.tipoProduto = ?1",
             nativeQuery = true)
     Page<ProdutoModel> search(TipoProdutoEnum tipo, Pageable pageable);
 
