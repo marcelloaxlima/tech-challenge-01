@@ -3,6 +3,9 @@ package br.com.fiap.soat07.techchallenge01.domain.provider;
 import java.util.List;
 import java.util.Optional;
 
+import br.com.fiap.soat07.techchallenge01.domain.usecase.ComboNotFoundException;
+import br.com.fiap.soat07.techchallenge01.domain.usecase.CreatePedidoUseCase;
+import br.com.fiap.soat07.techchallenge01.infra.repository.ComboRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -23,15 +26,18 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class PedidoProviderImpl implements PedidoUseCase {
+public class PedidoProviderImpl implements PedidoUseCase, CreatePedidoUseCase {
 
 	private final PedidoRepository repository;
+
+	private final ComboRepository comboRepository;
 
 	private final PedidoRepositoryMapper pedidoRepositoryMapper;
 	
 	private final ComboRepositoryMapper comboRepositoryMapper;
 	
 	private final ProdutoRepositoryMapper produtoRepositoryMapper;
+	private final PedidoRepository pedidoRepository;
 
 	@Override
 	public Page<Pedido> getPageable(Pageable pageable) {
@@ -95,5 +101,20 @@ public class PedidoProviderImpl implements PedidoUseCase {
 	public void delete(Long id) {
 		repository.deleteById(id);
 	}
+
+	@Override
+	public Pedido create(Long id) {
+		if (id == null)
+			throw new IllegalArgumentException("Obrigatório informar o código do Combo");
+
+		ComboModel combo = comboRepository.findById(id).orElseThrow(() -> new ComboNotFoundException(id));
+		PedidoModel pedidoModel = new PedidoModel();
+		for(ProdutoModel produto : combo.getProdutos()) {
+			pedidoModel.getProdutos().add(produto);
+		}
+
+        return pedidoRepositoryMapper.toDomain(repository.save(pedidoModel));
+	}
+
 
 }
