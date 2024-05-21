@@ -19,6 +19,7 @@
 		<springdoc-openapi-ui.version>1.8.0</springdoc-openapi-ui.version>
 		<org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
 		<org.projectlombok.version>1.18.30</org.projectlombok.version>
+		<springdoc-openapi-starter-webmvc-ui.version>2.5.0</springdoc-openapi-starter-webmvc-ui.version>
 	</properties>
 	
 	<dependencies>
@@ -37,7 +38,7 @@
 		<dependency>
     		<groupId>org.springdoc</groupId>
    		 	<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-    		<version>2.5.0</version>
+    		<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
 		</dependency>
 		
 		<!-- springdoc-openapi-starter-webmvc-ui -->
@@ -45,6 +46,13 @@
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
             <version>${springdoc-openapi-ui.version}</version>
+        </dependency>
+        
+        <!-- error-handling-spring-boot-starter -->
+        <dependency>
+            <groupId>io.github.wimdeblauwe</groupId>
+            <artifactId>error-handling-spring-boot-starter</artifactId>
+            <version>4.2.0</version>
         </dependency>
 		
 		<!-- mysql-connector-j -->
@@ -56,12 +64,13 @@
 		
 		
 		<!-- mysql-connector-java -->
+		<!--
 		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>8.0.28</version>
 		</dependency>
-
+		-->
 		
 		<!-- lombok -->
 		<dependency>

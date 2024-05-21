@@ -1,7 +1,10 @@
 package br.com.fiap.soat07.techchallenge01.infra.repository.model;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import jakarta.persistence.CascadeType;
@@ -23,23 +26,33 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "CLIENTES")
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "CLIENTES")
 public class ClienteModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
+	@Column
 	private String nome;
 	
 	@Column(unique=true)
 	private String cpf;	
 	
+	@Column
 	private String codigo;
 	
 	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
 	private List<ComboModel> combos;
+	
+	@CreatedDate
+    @Column(nullable = false, updatable = false)
+    private OffsetDateTime dataCriacao;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private OffsetDateTime ultimaModificacao;
 	
 
 }

@@ -7,6 +7,7 @@ import org.springframework.util.ObjectUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import br.com.fiap.soat07.techchallenge01.domain.enumeration.PedidoStatusEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,13 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PedidoDTO {
 	
-	private long id;	
-	private long codigo;
-	private long nome;
+	private long id;		
+	private String nomeCliente;
+	private String codigo;
 	private ClienteDTO cliente;
+	private List<ComboDTO> combos;
 	private List<ProdutoDTO> produtos;
+	private PedidoStatusEnum status;
 
 	
 	public BigDecimal getValor() {
