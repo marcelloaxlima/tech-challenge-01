@@ -16,8 +16,7 @@ import lombok.NoArgsConstructor;
 public class PagamentoDTO {
 	
 	private long id;	
-	private long pedidoId;	
-	private String metodoDePagamento;	
+	private long pedidoId;		
 	private PagamentoStatusEnum status;
 	private ProvedorPagamentoEnum provedorServiço;
 	private MetodoPagamentoEnum metodoPagamento;

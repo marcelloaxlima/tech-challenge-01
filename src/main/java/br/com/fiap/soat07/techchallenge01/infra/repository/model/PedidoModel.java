@@ -16,7 +16,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -55,14 +54,6 @@ public class PedidoModel {
 	
 	@Column(precision = 10, scale = 2)
     private BigDecimal valor;
-	
-	//@ManyToMany(mappedBy = "pedidos")
-	
-	//@ManyToMany(cascade = { CascadeType.MERGE}, fetch = FetchType.EAGER)
-    //@JoinTable(name = "combo_pedidos",
-    //joinColumns = @JoinColumn(name = "pedidoid", nullable = true, updatable = true),
-    //inverseJoinColumns = @JoinColumn(name = "comboid", nullable = true, updatable = true))
-	//private List<ComboModel> combos;
 	
 	@ManyToMany(cascade = { CascadeType.MERGE})
     @JoinTable(name = "pedido_produtos",

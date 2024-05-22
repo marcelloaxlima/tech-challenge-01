@@ -17,7 +17,6 @@ public class Pagamento {
 	
 	private long id;	
 	private long pedidoId;	
-	private String metodoDePagamento;
 	private PagamentoStatusEnum status;
 	private ProvedorPagamentoEnum provedorServiço;
 	private MetodoPagamentoEnum metodoPagamento;

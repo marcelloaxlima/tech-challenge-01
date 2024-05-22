@@ -50,14 +50,6 @@ public class ComboModel {
             joinColumns = @JoinColumn(name = "comboid", nullable = true, updatable = true),
             inverseJoinColumns = @JoinColumn(name = "produtoid", nullable = true, updatable = true))
 	private Set<ProdutoModel> produtos;
-	
-   
-    //@ManyToMany(cascade = { CascadeType.MERGE}, fetch = FetchType.EAGER)
-    //@JoinTable(name = "combo_pedidos",
-    //joinColumns = @JoinColumn(name = "comboid", nullable = true, updatable = true),
-    //inverseJoinColumns = @JoinColumn(name = "pedidoid", nullable = true, updatable = true))
-    //@ManyToMany(mappedBy = "combos")
-	//private Set<PedidoModel> pedidos;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

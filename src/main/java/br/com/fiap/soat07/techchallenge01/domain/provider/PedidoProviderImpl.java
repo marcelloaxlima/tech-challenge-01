@@ -17,7 +17,6 @@ import br.com.fiap.soat07.techchallenge01.domain.enumeration.PedidoStatusEnum;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.PedidoUseCase;
 import br.com.fiap.soat07.techchallenge01.infra.repository.CustomPedidoProdutosRepository;
 import br.com.fiap.soat07.techchallenge01.infra.repository.PedidoRepository;
-import br.com.fiap.soat07.techchallenge01.infra.repository.mapper.ComboRepositoryMapper;
 import br.com.fiap.soat07.techchallenge01.infra.repository.mapper.PedidoRepositoryMapper;
 import br.com.fiap.soat07.techchallenge01.infra.repository.mapper.ProdutoRepositoryMapper;
 import br.com.fiap.soat07.techchallenge01.infra.repository.model.PedidoModel;
@@ -34,8 +33,6 @@ public class PedidoProviderImpl implements PedidoUseCase {
 	private final CustomPedidoProdutosRepository customPedidoProdutosRepository;
 
 	private final PedidoRepositoryMapper pedidoRepositoryMapper;
-	
-	private final ComboRepositoryMapper comboRepositoryMapper;
 	
 	private final ProdutoRepositoryMapper produtoRepositoryMapper;
 
