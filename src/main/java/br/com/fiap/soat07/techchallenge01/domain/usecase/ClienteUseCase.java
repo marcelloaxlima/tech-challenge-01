@@ -20,6 +20,13 @@ public interface ClienteUseCase {
 	 * @return {@link Cliente}
 	 */
 	Cliente getById(Long id);
+
+	/**
+	 * Get by id
+	 * @param cpf {@link String}
+	 * @return {@link Cliente}
+	 */
+	Cliente getByCpf(String cpf);
 	
 	/**
 	 * Create new

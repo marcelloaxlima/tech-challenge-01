@@ -9,7 +9,7 @@ services:
     networks:
       - java-service-network
     environment:
-      - spring.datasource.url=jdbc:mysql://mysqldb:3306/appdb?allowPublicKeyRetrieval=true    
+      - spring.datasource.url=jdbc:mysql://localhost:3306/appdb?allowPublicKeyRetrieval=true    
     depends_on:
       - mysqldb
     

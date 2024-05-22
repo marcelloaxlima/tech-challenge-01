@@ -37,6 +37,12 @@ public class ClienteProviderImpl implements ClienteUseCase {
 	}
 
 	@Override
+	public Cliente getByCpf(String cpf) {
+		Optional<ClienteModel> clienteModel = this.repository.findByCpf(cpf);
+		return mapper.toDomain(clienteModel.orElseThrow(() -> new RuntimeException()));
+	}
+
+	@Override
 	public Cliente create(Cliente cliente) {
 		return mapper.toDomain(repository.save(mapper.toModel(cliente)));
 	}
