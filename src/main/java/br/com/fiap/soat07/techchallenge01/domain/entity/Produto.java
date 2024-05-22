@@ -1,6 +1,7 @@
 package br.com.fiap.soat07.techchallenge01.domain.entity;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 
 import br.com.fiap.soat07.techchallenge01.domain.enumeration.TipoProdutoEnum;
 import lombok.AllArgsConstructor;
@@ -17,5 +18,7 @@ public class Produto {
 	private String nome;	
 	private BigDecimal valor;	
 	private TipoProdutoEnum tipoProduto;	
+	private OffsetDateTime dataCriacao;
+	private OffsetDateTime ultimaModificacao;
 	
 }

@@ -26,7 +26,7 @@ application:
   database:
     username: ${DATABASE_USER_NAME:src/main/resources/database/secret-db-username}
     password: ${DATABASE_USER_PASSWORD:src/main/resources/database/secret-db-password}
-    driver-class-name: ${DATABASE_DRIVER_CLASS_NAME:com.mysql.jdbc.Driver}
+    driver-class-name: ${DATABASE_DRIVER_CLASS_NAME:com.mysql.cj.jdbc.Driver}
     url: ${DATABASE_URL:jdbc:mysql://localhost:3306/mydb}
     platform: ${DATABASE_PLATFORM:org.hibernate.dialect.MySQL5InnoDBDialect}
     

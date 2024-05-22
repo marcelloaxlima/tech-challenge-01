@@ -1,6 +1,7 @@
 package br.com.fiap.soat07.techchallenge01.domain.entity;
 
 import java.math.BigDecimal;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.util.ObjectUtils;
@@ -21,6 +22,8 @@ public class Pedido {
 	private List<Combo> combos;
 	private List<Produto> produtos;
 	private PedidoStatusEnum status;
+	private OffsetDateTime dataCriacao;
+	private OffsetDateTime ultimaModificacao;
 
 	
 	public BigDecimal getValor() {

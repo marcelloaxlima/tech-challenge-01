@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import br.com.fiap.soat07.techchallenge01.domain.entity.Cliente;
-import br.com.fiap.soat07.techchallenge01.domain.provider.mapper.ClienteRepositoryMapper;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.ClienteUseCase;
 import br.com.fiap.soat07.techchallenge01.infra.repository.ClienteRepository;
+import br.com.fiap.soat07.techchallenge01.infra.repository.mapper.ClienteRepositoryMapper;
 import br.com.fiap.soat07.techchallenge01.infra.repository.model.ClienteModel;
 import lombok.RequiredArgsConstructor;
 

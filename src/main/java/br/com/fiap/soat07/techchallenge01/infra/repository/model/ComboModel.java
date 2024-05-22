@@ -45,18 +45,20 @@ public class ComboModel {
     @JoinColumn(name = "cliente_id", nullable = true, updatable = true)
 	private ClienteModel cliente;
 	      
-    @ManyToMany(cascade = { CascadeType.MERGE})
+    @ManyToMany(cascade = { CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinTable(name = "combo_produtos",
             joinColumns = @JoinColumn(name = "comboid", nullable = true, updatable = true),
             inverseJoinColumns = @JoinColumn(name = "produtoid", nullable = true, updatable = true))
 	private Set<ProdutoModel> produtos;
 	
-    @ManyToMany(cascade = { CascadeType.MERGE})
-    @JoinTable(name = "combo_pedidos",
-    joinColumns = @JoinColumn(name = "comboid", nullable = true, updatable = true),
-    inverseJoinColumns = @JoinColumn(name = "pedidoid", nullable = true, updatable = true))
-	private Set<PedidoModel> pedidos;
-	
+   
+    //@ManyToMany(cascade = { CascadeType.MERGE}, fetch = FetchType.EAGER)
+    //@JoinTable(name = "combo_pedidos",
+    //joinColumns = @JoinColumn(name = "comboid", nullable = true, updatable = true),
+    //inverseJoinColumns = @JoinColumn(name = "pedidoid", nullable = true, updatable = true))
+    //@ManyToMany(mappedBy = "combos")
+	//private Set<PedidoModel> pedidos;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dataCriacao;

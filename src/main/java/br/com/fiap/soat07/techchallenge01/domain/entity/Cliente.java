@@ -1,5 +1,7 @@
 package br.com.fiap.soat07.techchallenge01.domain.entity;
 
+import java.time.OffsetDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +15,7 @@ public class Cliente {
 	private String nome;	
 	private String cpf;	
 	private String codigo;
+	private OffsetDateTime dataCriacao;
+	private OffsetDateTime ultimaModificacao;
 
 }

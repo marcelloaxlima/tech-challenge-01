@@ -1,0 +1,25 @@
+package br.com.fiap.soat07.techchallenge01.domain.entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import br.com.fiap.soat07.techchallenge01.domain.enumeration.MetodoPagamentoEnum;
+import br.com.fiap.soat07.techchallenge01.domain.enumeration.PagamentoStatusEnum;
+import br.com.fiap.soat07.techchallenge01.domain.enumeration.ProvedorPagamentoEnum;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Pagamento {
+	
+	private long id;	
+	private long pedidoId;	
+	private String metodoDePagamento;
+	private PagamentoStatusEnum status;
+	private ProvedorPagamentoEnum provedorServiço;
+	private MetodoPagamentoEnum metodoPagamento;
+
+}
