@@ -2,6 +2,7 @@ package br.com.fiap.soat07.techchallenge01.application.api;
 
 import java.util.List;
 
+import br.com.fiap.soat07.techchallenge01.domain.provider.ProdutoService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.fiap.soat07.techchallenge01.application.mapper.ProdutoMapper;
 import br.com.fiap.soat07.techchallenge01.application.model.dto.ProdutoDTO;
-import br.com.fiap.soat07.techchallenge01.domain.usecase.ProdutoUseCase;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -35,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 @Tag(name = "Produto", description = "Produto")
 public class ProdutoController {
 
-    private final ProdutoUseCase produtoUseCase;
+    private final ProdutoService produtoService;
 
     private final ProdutoMapper mapper;
 
@@ -56,7 +56,7 @@ public class ProdutoController {
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProdutoDTO> createProduto(@RequestBody final ProdutoDTO produtoDTO) {
     	
-    	return ResponseEntity.ok(mapper.toDTO(produtoUseCase.create(mapper.toDomain(produtoDTO))));
+    	return ResponseEntity.ok(mapper.toDTO(produtoService.create(mapper.toDomain(produtoDTO))));
 	
     }
 
@@ -77,7 +77,7 @@ public class ProdutoController {
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProdutoDTO> updateProduto(@PathVariable final Long id, @RequestBody final ProdutoDTO produtoDTO) {
     	
-    	return ResponseEntity.ok(mapper.toDTO(produtoUseCase.update(id, mapper.toDomain(produtoDTO))));
+    	return ResponseEntity.ok(mapper.toDTO(produtoService.update(id, mapper.toDomain(produtoDTO))));
     	
     }
 
@@ -97,7 +97,7 @@ public class ProdutoController {
                 @Schema(implementation = ErrorResponse.class)) }) })
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<?> deleteProduto(@PathVariable final Long id) {
-    	produtoUseCase.delete(id);
+    	produtoService.delete(id);
     	return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -118,7 +118,7 @@ public class ProdutoController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProdutoDTO> getProduto(@PathVariable final Long id) {
     	
-    	return ResponseEntity.ok(mapper.toDTO(produtoUseCase.getById(id)));
+    	return ResponseEntity.ok(mapper.toDTO(produtoService.getById(id)));
 	
     }
     
@@ -140,7 +140,7 @@ public class ProdutoController {
     public ResponseEntity<List<ProdutoDTO>> getProdutos(@RequestParam(required = true, defaultValue = "0") Integer page, @RequestParam(required = true, defaultValue = "10") Integer size) {
     	
     	Pageable pageable = PageRequest.of(page, size);
-    	return ResponseEntity.ok(produtoUseCase.getPageable(pageable).stream().map(mapper::toDTO).toList());
+    	return ResponseEntity.ok(produtoService.search(pageable).stream().map(mapper::toDTO).toList());
 	
     }
 

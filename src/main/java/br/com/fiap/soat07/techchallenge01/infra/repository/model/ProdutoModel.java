@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.OffsetDateTime;
 import java.util.Set;
 
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -31,6 +33,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "PRODUTOS")
+//@SQLDelete(sql = "UPDATE PRODUTOS SET dataExclusao = CURRENT_TIMESTAMP WHERE id=?")
+//@Where(clause = "dataExclusao IS NULL")
 public class ProdutoModel {
 	
 	@Id
@@ -64,4 +68,7 @@ public class ProdutoModel {
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime ultimaModificacao;
+
+	@Column
+	private OffsetDateTime dataExclusao;
 }
