@@ -14,7 +14,7 @@ import br.com.fiap.soat07.techchallenge01.domain.entity.Combo;
 import br.com.fiap.soat07.techchallenge01.domain.entity.Pedido;
 import br.com.fiap.soat07.techchallenge01.domain.entity.Produto;
 import br.com.fiap.soat07.techchallenge01.domain.enumeration.PedidoStatusEnum;
-import br.com.fiap.soat07.techchallenge01.domain.exception.ComboNotFoundException;
+import br.com.fiap.soat07.techchallenge01.domain.exception.PedidoNotFoundException;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.CreatePedidoUseCase;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.PedidoUseCase;
 import br.com.fiap.soat07.techchallenge01.infra.repository.ComboRepository;
@@ -50,11 +50,10 @@ public class PedidoProviderImpl implements PedidoUseCase, CreatePedidoUseCase {
 
 	}
 
-	// TODO Criate specific exception
 	@Override
 	public Pedido getById(Long id) {
 		Optional<PedidoModel> pedidoModel = this.pedidoRepository.findById(id);
-		return pedidoRepositoryMapper.toDomain(pedidoModel.orElseThrow(() -> new RuntimeException()));
+		return pedidoRepositoryMapper.toDomain(pedidoModel.orElseThrow(() -> new PedidoNotFoundException(id)));
 	}
 
 	@Override
@@ -75,7 +74,7 @@ public class PedidoProviderImpl implements PedidoUseCase, CreatePedidoUseCase {
 	@Transactional
 	public Pedido update(Long id, Pedido pedido) {
 
-		this.pedidoRepository.findById(id).orElseThrow(() -> new RuntimeException());
+		this.pedidoRepository.findById(id).orElseThrow(() -> new PedidoNotFoundException(id));
 				
 		List<Long> produtoIds = customPedidoProdutosRepository.getProdutosByPedidoId(id);
 				
@@ -93,7 +92,7 @@ public class PedidoProviderImpl implements PedidoUseCase, CreatePedidoUseCase {
 	@Override
 	public Pedido updateStatus(Long id, PedidoStatusEnum status) {
 		Optional<PedidoModel> pedidoModelOption = this.pedidoRepository.findById(id);
-		PedidoModel pedidoModel = pedidoModelOption.orElseThrow(() -> new RuntimeException());
+		PedidoModel pedidoModel = pedidoModelOption.orElseThrow(() -> new PedidoNotFoundException(id));
 		
 		pedidoModel.setStatus(status);
 		
@@ -103,6 +102,7 @@ public class PedidoProviderImpl implements PedidoUseCase, CreatePedidoUseCase {
 
 	@Override
 	public void delete(Long id) {
+		this.pedidoRepository.findById(id).orElseThrow(() -> new PedidoNotFoundException(id));
 		pedidoRepository.deleteById(id);
 	}
 
@@ -111,7 +111,7 @@ public class PedidoProviderImpl implements PedidoUseCase, CreatePedidoUseCase {
 		if (id == null)
 			throw new IllegalArgumentException("Obrigatório informar o código do Combo");
 
-		ComboModel combo = comboRepository.findById(id).orElseThrow(() -> new ComboNotFoundException(id));
+		ComboModel combo = comboRepository.findById(id).orElseThrow(() -> new PedidoNotFoundException(id));
 		PedidoModel pedidoModel = new PedidoModel();
 		for(ProdutoModel produto : combo.getProdutos()) {
 			pedidoModel.getProdutos().add(produto);

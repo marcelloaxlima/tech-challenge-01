@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.fiap.soat07.techchallenge01.domain.entity.Combo;
 import br.com.fiap.soat07.techchallenge01.domain.entity.Produto;
+import br.com.fiap.soat07.techchallenge01.domain.exception.ComboNotFoundException;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.ComboUseCase;
 import br.com.fiap.soat07.techchallenge01.infra.repository.ComboRepository;
 import br.com.fiap.soat07.techchallenge01.infra.repository.CustomComboProdutosRepository;
@@ -49,12 +50,11 @@ public class ComboProviderImpl implements ComboUseCase {
 
 	}
 
-	// TODO Criate specific exception
 	@Override
 	@Transactional
 	public Combo getById(long id) {
 		Optional<ComboModel> comboModelOptional = this.comboRepository.findComboById(id);
-		ComboModel comboModel = comboModelOptional.orElseThrow(() -> new RuntimeException());		
+		ComboModel comboModel = comboModelOptional.orElseThrow(() -> new ComboNotFoundException(id));		
 		Optional<Set<ProdutoModel>> produtoModelOptional = produtoRepository.findProdutosByComboId(id);
 		
 		List<Produto> produtos = produtoModelOptional.orElseGet(null).stream()
@@ -73,7 +73,7 @@ public class ComboProviderImpl implements ComboUseCase {
 	@Transactional
 	public Combo update(long id, Combo comboAtualizado) {
 		
-		this.comboRepository.findById(id).orElseThrow(() -> new RuntimeException());
+		this.comboRepository.findById(id).orElseThrow(() -> new ComboNotFoundException(id));
 		
 		if (hasDuplicates(comboAtualizado.getProdutos().stream().map(p -> p.getTipoProduto()).toList())) throw new RuntimeException(); //TODO create a specific exception
 		
@@ -93,6 +93,7 @@ public class ComboProviderImpl implements ComboUseCase {
 
 	@Override
 	public void delete(long id) {
+		this.comboRepository.findById(id).orElseThrow(() -> new ComboNotFoundException(id));
 		comboRepository.deleteById(id);
 	}
 	

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import br.com.fiap.soat07.techchallenge01.domain.entity.Cliente;
+import br.com.fiap.soat07.techchallenge01.domain.exception.ClienteNotFoundException;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.ClienteUseCase;
 import br.com.fiap.soat07.techchallenge01.infra.repository.ClienteRepository;
 import br.com.fiap.soat07.techchallenge01.infra.repository.mapper.ClienteRepositoryMapper;
@@ -29,11 +30,10 @@ public class ClienteProviderImpl implements ClienteUseCase {
 
 	}
 
-	// TODO Criate specific exception
 	@Override
 	public Cliente getById(Long id) {
 		Optional<ClienteModel> clienteModel = this.repository.findById(id);
-		return mapper.toDomain(clienteModel.orElseThrow(() -> new RuntimeException()));
+		return mapper.toDomain(clienteModel.orElseThrow(() -> new ClienteNotFoundException(id)));
 	}
 
 	@Override
@@ -61,6 +61,7 @@ public class ClienteProviderImpl implements ClienteUseCase {
 
 	@Override
 	public void delete(Long id) {
+		this.repository.findById(id).orElseThrow(() -> new ClienteNotFoundException(id));
 		repository.deleteById(id);
 	}
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import br.com.fiap.soat07.techchallenge01.domain.entity.Produto;
 import br.com.fiap.soat07.techchallenge01.domain.enumeration.TipoProdutoEnum;
+import br.com.fiap.soat07.techchallenge01.domain.exception.ProdutoNotFoundException;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.CreateProdutoUseCase;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.DeleteProdutoUseCase;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.SearchProdutoUseCase;
