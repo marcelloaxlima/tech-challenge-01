@@ -36,25 +36,23 @@ import lombok.RequiredArgsConstructor;
 public class ClienteController {
 
     private final ClienteUseCase clienteUseCase;
-
     private final ClienteMapper mapper;
 
-
     @Operation(
-    		operationId = "criar",
-    		description = "Criar cliente",
-    		tags = {"Cliente"}    		
-    		)
+      operationId = "criar",
+      description = "Criar cliente",
+      tags = {"Cliente"}    		
+    )
     
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Created", content = 
-              { @Content(mediaType = "application/json", schema = 
-                @Schema(implementation = ClienteDTO.class)) }),
-            @ApiResponse(responseCode = "400", description = "Invalid values"), 
-            @ApiResponse(responseCode = "404", description = "Client already exists"),
-            @ApiResponse(responseCode = "500", description = "Internal server error", content = 
-              { @Content(mediaType = "application/json", schema = 
-                @Schema(implementation = ErrorResponse.class)) }) })
+      @ApiResponse(responseCode = "201", description = "Created", content = 
+        { @Content(mediaType = "application/json", schema = 
+          @Schema(implementation = ClienteDTO.class)) }),
+      @ApiResponse(responseCode = "400", description = "Invalid values"), 
+      @ApiResponse(responseCode = "404", description = "Client already exists"),
+      @ApiResponse(responseCode = "500", description = "Internal server error", content = 
+        { @Content(mediaType = "application/json", schema = 
+          @Schema(implementation = ErrorResponse.class)) }) })
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClienteDTO> createCliente(@RequestBody final ClienteDTO clienteDTO) {
@@ -64,10 +62,10 @@ public class ClienteController {
     }
 
     @Operation(
-    		operationId = "atualizar",
-    		description = "Atualizar cliente",
-    		tags = {"Cliente"}    		
-    		)
+      operationId = "atualizar",
+      description = "Atualizar cliente",
+      tags = {"Cliente"}    		
+    )
     
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ok", content = 
@@ -88,10 +86,10 @@ public class ClienteController {
 
 
     @Operation(
-    		operationId = "deletar",
-    		description = "Deletar cliente",
-    		tags = {"Cliente"}    		
-    		)
+      operationId = "deletar",
+      description = "Deletar cliente",
+    	tags = {"Cliente"}    		
+    )
     
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Deleted", content = 
@@ -110,10 +108,10 @@ public class ClienteController {
     }
 
     @Operation(
-    		operationId = "consultarId",
-    		description = "Consultar cliente",
-    		tags = {"Cliente"}    		
-    		)
+      operationId = "consultarId",
+      description = "Consultar cliente",
+      tags = {"Cliente"}    		
+    )
     
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ok", content = 
@@ -127,16 +125,35 @@ public class ClienteController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ClienteDTO> getCliente(@PathVariable final long id) {
-    	
     	return ResponseEntity.ok(mapper.toDTO(clienteUseCase.getById(id)));
-	
     }
     
     @Operation(
-    		operationId = "listar",
-    		description = "Listar clientes",
-    		tags = {"Cliente"}    		
-    		)
+      operationId = "consultarCpf",
+      description = "Consultar cliente pelo CPF",
+      tags = {"Cliente"}    		
+    )
+    
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ok", content = 
+              { @Content(mediaType = "application/json", schema = 
+                @Schema(implementation = ClienteDTO.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid ID supplied"), 
+            @ApiResponse(responseCode = "404", description = "Client not found"),
+            @ApiResponse(responseCode = "500", description = "Internal server error", content = 
+              { @Content(mediaType = "application/json", schema = 
+                @Schema(implementation = ErrorResponse.class)) }) })
+
+    @GetMapping(value = "/cpf/{cpf}")
+    public ResponseEntity<ClienteDTO> getClienteByCpf(@PathVariable("cpf") String cpf) {
+    	return ResponseEntity.ok(mapper.toDTO(clienteUseCase.getByCpf(cpf)));
+    }
+    
+    @Operation(
+      operationId = "listar",
+      description = "Listar clientes",
+      tags = {"Cliente"}    		
+    )
     
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ok", content = 

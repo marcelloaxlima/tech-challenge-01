@@ -1,3 +1,32 @@
+# Tech Challenge
+
+Este projeto foi desenvolvido com o Framework Spring na linguagem JAVA e banco de dados Mysql.
+
+A porta 8080 é destinada a API RESTful, e a porta 3306 para o banco de dados.
+
+### Subindo o ambiente
+
+Certifique=se que as portas 8080 e 3306 estão disponíveis para subir os containers Docker.
+
+Para subir os containers rode o seguinte comando:
+
+``` docker-compose up -d ```
+
+Após o build e o up dos containers a aplicação estará disponível em:
+
+http://localhost:8080/
+
+### Documentação
+
+A aplicação possuí um Swagger para documentar as endpoints criadas para o projeto.
+
+Você pode acessar o Swagger pelo link:
+
+http://localhost:8080/tech-challenge-01/swagger-ui/index.html
+
+Também foi disponibilizado uma collection do **postman**, no diretório .postman na raiz do projeto.
+
+
 ## Linguagem Ubíqua
 
 **Cliente**, quem faz o pedido
