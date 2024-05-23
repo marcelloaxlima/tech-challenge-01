@@ -5,7 +5,7 @@ create table combo_produtos (comboid bigint not null, produtoid bigint not null,
 create table combos (id bigint not null auto_increment, data_criacao datetime(6) not null, nome varchar(255), ultima_modificacao datetime(6) not null, cliente_id bigint, primary key (id)) engine=InnoDB
 create table pedido_produtos (pedidoid bigint not null, produtoid bigint not null) engine=InnoDB
 create table pedidos (id bigint not null auto_increment, codigo varchar(255), data_criacao datetime(6) not null, nome_cliente varchar(255), status enum ('INICIADO','PAGO','PREPARO','PRONTO','FINALIZADO'), ultima_modificacao datetime(6) not null, valor decimal(10,2), primary key (id)) engine=InnoDB
-create table produtos (id bigint not null auto_increment, codigo varchar(255), data_criacao datetime(6) not null, nome varchar(255), tipo_produto enum ('LANCHE','ACOMPANHAMENTO','BEBIDA','SOBREMESA'), ultima_modificacao datetime(6) not null, valor decimal(10,2), primary key (id)) engine=InnoDB
+create table produtos (id bigint not null auto_increment, codigo varchar(255), data_criacao datetime(6) not null, data_exclusao datetime(6), nome varchar(255), tipo_produto enum ('LANCHE','ACOMPANHAMENTO','BEBIDA','SOBREMESA'), ultima_modificacao datetime(6) not null, valor decimal(10,2), primary key (id)) engine=InnoDB
 alter table clientes drop index UK_7wflw78ibh162cmq12ii6ffly
 alter table clientes add constraint UK_7wflw78ibh162cmq12ii6ffly unique (cpf)
 alter table produtos drop index UK_pk2k37y05kgqceufn556j55w3

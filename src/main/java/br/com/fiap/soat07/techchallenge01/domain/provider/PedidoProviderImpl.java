@@ -14,11 +14,15 @@ import br.com.fiap.soat07.techchallenge01.domain.entity.Combo;
 import br.com.fiap.soat07.techchallenge01.domain.entity.Pedido;
 import br.com.fiap.soat07.techchallenge01.domain.entity.Produto;
 import br.com.fiap.soat07.techchallenge01.domain.enumeration.PedidoStatusEnum;
+import br.com.fiap.soat07.techchallenge01.domain.exception.ComboNotFoundException;
+import br.com.fiap.soat07.techchallenge01.domain.usecase.CreatePedidoUseCase;
 import br.com.fiap.soat07.techchallenge01.domain.usecase.PedidoUseCase;
+import br.com.fiap.soat07.techchallenge01.infra.repository.ComboRepository;
 import br.com.fiap.soat07.techchallenge01.infra.repository.CustomPedidoProdutosRepository;
 import br.com.fiap.soat07.techchallenge01.infra.repository.PedidoRepository;
 import br.com.fiap.soat07.techchallenge01.infra.repository.mapper.PedidoRepositoryMapper;
 import br.com.fiap.soat07.techchallenge01.infra.repository.mapper.ProdutoRepositoryMapper;
+import br.com.fiap.soat07.techchallenge01.infra.repository.model.ComboModel;
 import br.com.fiap.soat07.techchallenge01.infra.repository.model.PedidoModel;
 import br.com.fiap.soat07.techchallenge01.infra.repository.model.ProdutoModel;
 import jakarta.transaction.Transactional;
@@ -26,15 +30,18 @@ import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class PedidoProviderImpl implements PedidoUseCase {
+public class PedidoProviderImpl implements PedidoUseCase, CreatePedidoUseCase {
 
 	private final PedidoRepository pedidoRepository;
 	
 	private final CustomPedidoProdutosRepository customPedidoProdutosRepository;
 
+	private final ComboRepository comboRepository;
+
 	private final PedidoRepositoryMapper pedidoRepositoryMapper;
 	
 	private final ProdutoRepositoryMapper produtoRepositoryMapper;
+
 
 	@Override
 	public Page<Pedido> getPageable(Pageable pageable) {
@@ -98,5 +105,20 @@ public class PedidoProviderImpl implements PedidoUseCase {
 	public void delete(Long id) {
 		pedidoRepository.deleteById(id);
 	}
+
+	@Override
+	public Pedido create(Long id) {
+		if (id == null)
+			throw new IllegalArgumentException("Obrigatório informar o código do Combo");
+
+		ComboModel combo = comboRepository.findById(id).orElseThrow(() -> new ComboNotFoundException(id));
+		PedidoModel pedidoModel = new PedidoModel();
+		for(ProdutoModel produto : combo.getProdutos()) {
+			pedidoModel.getProdutos().add(produto);
+		}
+
+        return pedidoRepositoryMapper.toDomain(pedidoRepository.save(pedidoModel));
+	}
+
 
 }
