@@ -1,21 +1,23 @@
 package br.com.fiap.soat07.techchallenge01.domain.provider;
 
-import br.com.fiap.soat07.techchallenge01.domain.entity.Produto;
-import br.com.fiap.soat07.techchallenge01.domain.enumeration.TipoProdutoEnum;
-import br.com.fiap.soat07.techchallenge01.domain.provider.mapper.ProdutoRepositoryMapper;
-import br.com.fiap.soat07.techchallenge01.domain.usecase.CreateProdutoUseCase;
-import br.com.fiap.soat07.techchallenge01.domain.usecase.DeleteProdutoUseCase;
-import br.com.fiap.soat07.techchallenge01.domain.usecase.SearchProdutoUseCase;
-import br.com.fiap.soat07.techchallenge01.domain.usecase.UpdateProdutoUseCase;
-import br.com.fiap.soat07.techchallenge01.infra.repository.ProdutoRepository;
-import br.com.fiap.soat07.techchallenge01.infra.repository.model.ProdutoModel;
-import lombok.RequiredArgsConstructor;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import br.com.fiap.soat07.techchallenge01.domain.entity.Produto;
+import br.com.fiap.soat07.techchallenge01.domain.enumeration.TipoProdutoEnum;
+import br.com.fiap.soat07.techchallenge01.domain.exception.ProdutoNotFoundException;
+import br.com.fiap.soat07.techchallenge01.domain.usecase.CreateProdutoUseCase;
+import br.com.fiap.soat07.techchallenge01.domain.usecase.DeleteProdutoUseCase;
+import br.com.fiap.soat07.techchallenge01.domain.usecase.SearchProdutoUseCase;
+import br.com.fiap.soat07.techchallenge01.domain.usecase.UpdateProdutoUseCase;
+import br.com.fiap.soat07.techchallenge01.infra.repository.ProdutoRepository;
+import br.com.fiap.soat07.techchallenge01.infra.repository.mapper.ProdutoRepositoryMapper;
+import br.com.fiap.soat07.techchallenge01.infra.repository.model.ProdutoModel;
+import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor

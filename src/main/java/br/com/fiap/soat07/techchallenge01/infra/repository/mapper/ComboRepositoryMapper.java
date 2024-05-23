@@ -1,4 +1,4 @@
-package br.com.fiap.soat07.techchallenge01.domain.provider.mapper;
+package br.com.fiap.soat07.techchallenge01.infra.repository.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

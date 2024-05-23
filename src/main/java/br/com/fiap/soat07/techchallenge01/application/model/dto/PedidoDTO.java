@@ -21,7 +21,6 @@ public class PedidoDTO {
 	private long id;		
 	private String nomeCliente;
 	private String codigo;
-	private ClienteDTO cliente;
 	private List<ComboDTO> combos;
 	private List<ProdutoDTO> produtos;
 	private PedidoStatusEnum status;

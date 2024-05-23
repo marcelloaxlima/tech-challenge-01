@@ -33,8 +33,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "PEDIDOS")
 @EntityListeners(AuditingEntityListener.class)
+@Table(name = "PEDIDOS")
 public class PedidoModel {
 	
 	@Id
@@ -47,23 +47,20 @@ public class PedidoModel {
 	
 	@Column
 	private String nomeCliente;
-
+	
 	@Enumerated(EnumType.STRING)
 	@Column
 	private PedidoStatusEnum status;
 	
 	@Column(precision = 10, scale = 2)
     private BigDecimal valor;
-
-	@ManyToMany(mappedBy = "pedidos")
-	private List<ComboModel> combos;
 	
 	@ManyToMany(cascade = { CascadeType.MERGE})
     @JoinTable(name = "pedido_produtos",
     joinColumns = @JoinColumn(name = "pedidoid", nullable = true, updatable = true),
     inverseJoinColumns = @JoinColumn(name = "produtoid", nullable = true, updatable = true))
 	private List<ProdutoModel> produtos;
-
+	
 	@CreatedDate
     @Column(nullable = false, updatable = false)
     private OffsetDateTime dataCriacao;
@@ -72,11 +69,12 @@ public class PedidoModel {
     @Column(nullable = false)
     private OffsetDateTime ultimaModificacao;
 
-
+	
 	public BigDecimal getValor() {
 		return ObjectUtils.isEmpty(produtos) ? new BigDecimal(0.00) : produtos.stream().map(m -> m.getValor())
 		        .reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
+	
 
 }

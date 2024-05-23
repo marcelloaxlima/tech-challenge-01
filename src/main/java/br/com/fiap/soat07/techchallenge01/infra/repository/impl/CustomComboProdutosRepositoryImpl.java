@@ -32,8 +32,8 @@ public class CustomComboProdutosRepositoryImpl implements CustomComboProdutosRep
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Long> getProdutosByComboId(long comboId) {
-		String deleteQuery = "SELECT * FROM combo_produtos WHERE comboid = :comboid";
-		return entityManager.createNativeQuery(deleteQuery, Long.class)
+		String query = "SELECT produtoid FROM combo_produtos WHERE comboid = :comboid";
+		return entityManager.createNativeQuery(query, Long.class)
         .setParameter("comboid", comboId)
         .getResultList();
 

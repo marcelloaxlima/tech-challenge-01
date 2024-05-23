@@ -10,16 +10,16 @@ public interface ProdutoMapper {
 	
 	/**
 	 * To domain mapper
-	 * @param itemModel
+	 * @param produtoDTO
 	 * @return {@link Produto}
 	 */
-	Produto toDomain(ProdutoDTO itemModel);
+	Produto toDomain(ProdutoDTO produtoDTO);
 	
 	/**
 	 * To model mapper
-	 * @param cliente
+	 * @param produto
 	 * @return {@link ProdutoDTO}
 	 */
-	ProdutoDTO toDTO(Produto item);
+	ProdutoDTO toDTO(Produto produto);
 
 }
