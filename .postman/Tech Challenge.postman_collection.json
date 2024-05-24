@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "cd60673c-bf12-4dfd-a25b-54dd77f13f5a",
+		"name": "Tech Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8159841",
+		"_collection_link": "https://empresta-labs.postman.co/workspace/Integra%25C3%25A7%25C3%25B5es~bda28b29-5934-450d-a02b-d90cb6e2e057/collection/8159841-cd60673c-bf12-4dfd-a25b-54dd77f13f5a?action=share&source=collection_link&creator=8159841"
+	},
+	"item": [
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Cadastrar Cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Cliente Teste 1\",\r\n  \"cpf\": \"07003374072\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}cliente",
+							"host": [
+								"{{tech_challenge_url}}cliente"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por CPF",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Cliente Teste 1\",\r\n  \"cpf\": \"07003374072\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}cliente/cpf/39223633850",
+							"host": [
+								"{{tech_challenge_url}}cliente"
+							],
+							"path": [
+								"cpf",
+								"39223633850"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar por CPF Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"Cliente Teste 1\",\r\n  \"cpf\": \"07003374072\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}cliente/cpf/39223633850",
+							"host": [
+								"{{tech_challenge_url}}cliente"
+							],
+							"path": [
+								"cpf",
+								"39223633850"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
