@@ -6,11 +6,14 @@ import java.io.IOException;
 
 import javax.sql.DataSource;
 
+import org.springframework.boot.autoconfigure.batch.BatchProperties.Jdbc;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -41,6 +44,18 @@ public class DatabaseConfig {
 		hikariConfig.setUsername(getUsername());
 		hikariConfig.setPassword(getPassword());
 		return new HikariDataSource(hikariConfig);
+	}
+
+	@Bean
+	@DependsOn("dataSource")
+	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		
+		jdbcTemplate.update("""
+			INSERT INTO produtos (id,codigo,data_criacao,nome,tipo_produto,ultima_modificacao,data_exclusao,valor) VALUES
+			(1,"LAN01","2024-05-20 04:35:49.465472","Hamburger","LANCHE","2024-05-20 05:03:51.524812",null,5.50);
+		""");
+		return new JdbcTemplate(dataSource);
 	}
 	
 	private String getUsername() {

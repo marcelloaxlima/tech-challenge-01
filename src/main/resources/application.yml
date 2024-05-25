@@ -8,6 +8,8 @@ spring:
     init:
       continue-on-error: false
       platform: mysql
+      data-locations: classpath:data.sql
+      node: always
   data:
     jpa:
       repositories:

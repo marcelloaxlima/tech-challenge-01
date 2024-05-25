@@ -10,7 +10,7 @@ Certifique=se que as portas 8080 e 3306 estão disponíveis para subir os contai
 
 Para subir os containers rode o seguinte comando:
 
-``` docker-compose up -d ```
+``` docker-compose up -d --no-deps --build ```
 
 Após o build e o up dos containers a aplicação estará disponível em:
 

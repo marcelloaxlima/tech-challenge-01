@@ -33,6 +33,13 @@ import lombok.NoArgsConstructor;
 @Table(name = "PRODUTOS")
 public class ProdutoModel {
 	
+	public ProdutoModel(String codigo, String nome, TipoProdutoEnum tipoProduto, BigDecimal valor) {
+		this.codigo = codigo;
+		this.nome = nome;
+		this.tipoProduto = tipoProduto;
+		this.valor = valor;
+	}
+
 	@Id
 	@Column(nullable = false, updatable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +55,7 @@ public class ProdutoModel {
 	private BigDecimal valor;
 	
 	@Enumerated(EnumType.STRING)
-	@Column
+	@Column(name="tipo_produto")
 	private TipoProdutoEnum tipoProduto;
 	
 	@ManyToMany(mappedBy = "produtos")
@@ -58,10 +65,16 @@ public class ProdutoModel {
 	private Set<ComboModel> combos;
 	
 	@CreatedDate
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, name = "data_criacao")
     private OffsetDateTime dataCriacao;
 
     @LastModifiedDate
-    @Column(nullable = false)
+    @Column(nullable = false, name = "ultima_modificacao")
     private OffsetDateTime ultimaModificacao;
+<<<<<<< Updated upstream:src/main/java/br/com/fiap/soat07/techchallenge01/infra/repository/model/ProdutoModel.java
+=======
+
+	@Column(name = "data_exclusao", nullable = true)
+	private OffsetDateTime dataExclusao;
+>>>>>>> Stashed changes:src/main/java/br/com/fiap/soat07/techchallenge01/adapter/out/persistence/mysql/model/ProdutoModel.java
 }
