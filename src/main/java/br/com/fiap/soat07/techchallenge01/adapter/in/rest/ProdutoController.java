@@ -2,7 +2,6 @@ package br.com.fiap.soat07.techchallenge01.adapter.in.rest;
 
 import java.util.List;
 
-import br.com.fiap.soat07.techchallenge01.application.service.ProdutoService;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.fiap.soat07.techchallenge01.adapter.in.rest.dto.mapper.ProdutoMapper;
 import br.com.fiap.soat07.techchallenge01.adapter.in.rest.dto.ProdutoDTO;
+import br.com.fiap.soat07.techchallenge01.adapter.in.rest.dto.mapper.ProdutoMapper;
+import br.com.fiap.soat07.techchallenge01.application.domain.enumeration.TipoProdutoEnum;
+import br.com.fiap.soat07.techchallenge01.application.service.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -137,10 +138,13 @@ public class ProdutoController {
               { @Content(mediaType = "application/json", schema = 
                 @Schema(implementation = ErrorResponse.class)) }) })
     @GetMapping
-    public ResponseEntity<List<ProdutoDTO>> getProdutos(@RequestParam(required = true, defaultValue = "0") Integer page, @RequestParam(required = true, defaultValue = "10") Integer size) {
+    public ResponseEntity<List<ProdutoDTO>> getProdutos(@RequestParam(required = true, defaultValue = "0") Integer page, 
+    		@RequestParam(required = true, defaultValue = "10") Integer size,
+    		@RequestParam(required = false) TipoProdutoEnum tipoProduto) {
     	
     	Pageable pageable = PageRequest.of(page, size);
-    	return ResponseEntity.ok(produtoService.search(pageable).stream().map(mapper::toDTO).toList());
+    	return ResponseEntity.ok(produtoService.search(tipoProduto, pageable).stream().map(mapper::toDTO).toList());
+    	
 	
     }
 
