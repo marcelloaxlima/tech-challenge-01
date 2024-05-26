@@ -76,12 +76,11 @@ public class ProdutoService implements CreateProdutoUseCase, UpdateProdutoUseCas
 
 	@Override
 	public Page<Produto> search(TipoProdutoEnum tipo, Pageable pageable) {
-		if (tipo == null)
-			search(pageable);
+		if (tipo == null) return search(pageable);
 
 		return new PageImpl<>(
-				repository.search(tipo, pageable).stream().map(mapper::toDomain).toList(), pageable,
-				repository.search(tipo, pageable).getNumberOfElements());
+				repository.searchByTipo(tipo, pageable).stream().map(mapper::toDomain).toList(), pageable,
+				repository.searchByTipo(tipo, pageable).getNumberOfElements());
 
 	}
 }
