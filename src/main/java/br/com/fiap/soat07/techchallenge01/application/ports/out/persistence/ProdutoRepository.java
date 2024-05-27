@@ -8,8 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import br.com.fiap.soat07.techchallenge01.application.domain.enumeration.TipoProdutoEnum;
 import br.com.fiap.soat07.techchallenge01.adapter.out.persistence.mysql.model.ProdutoModel;
+import br.com.fiap.soat07.techchallenge01.application.domain.enumeration.TipoProdutoEnum;
 
 public interface ProdutoRepository extends JpaRepository<ProdutoModel, Long> {
 	
@@ -26,9 +26,8 @@ public interface ProdutoRepository extends JpaRepository<ProdutoModel, Long> {
     Optional<ProdutoModel> findById(Long id);
 
     @Query(
-            value = "SELECT * FROM PRODUTOS p WHERE p.tipoProduto = ?1",
-            nativeQuery = true)
-    Page<ProdutoModel> search(TipoProdutoEnum tipo, Pageable pageable);
+            value = "SELECT p FROM ProdutoModel p WHERE p.tipoProduto = ?1")
+    Page<ProdutoModel> searchByTipo(TipoProdutoEnum tipo, Pageable pageable);
 
 
 }
