@@ -69,7 +69,6 @@ public class PedidoModel {
     @Column(nullable = false)
     private OffsetDateTime ultimaModificacao;
 
-	
 	public BigDecimal getValor() {
 		return ObjectUtils.isEmpty(produtos) ? new BigDecimal(0.00) : produtos.stream().map(m -> m.getValor())
 		        .reduce(BigDecimal.ZERO, BigDecimal::add);

@@ -1,8 +1,11 @@
 package br.com.fiap.soat07.techchallenge01.application.service;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
@@ -14,6 +17,7 @@ import br.com.fiap.soat07.techchallenge01.application.domain.entity.Combo;
 import br.com.fiap.soat07.techchallenge01.application.domain.entity.Pedido;
 import br.com.fiap.soat07.techchallenge01.application.domain.entity.Produto;
 import br.com.fiap.soat07.techchallenge01.application.domain.enumeration.PedidoStatusEnum;
+import br.com.fiap.soat07.techchallenge01.application.exception.ComboNotFoundException;
 import br.com.fiap.soat07.techchallenge01.application.exception.PedidoNotFoundException;
 import br.com.fiap.soat07.techchallenge01.application.ports.in.CreatePedidoUseCase;
 import br.com.fiap.soat07.techchallenge01.application.ports.in.PedidoUseCase;
@@ -22,6 +26,7 @@ import br.com.fiap.soat07.techchallenge01.application.ports.out.persistence.Cust
 import br.com.fiap.soat07.techchallenge01.application.ports.out.persistence.PedidoRepository;
 import br.com.fiap.soat07.techchallenge01.adapter.out.persistence.mysql.mapper.PedidoRepositoryMapper;
 import br.com.fiap.soat07.techchallenge01.adapter.out.persistence.mysql.mapper.ProdutoRepositoryMapper;
+import br.com.fiap.soat07.techchallenge01.adapter.out.persistence.mysql.model.ClienteModel;
 import br.com.fiap.soat07.techchallenge01.adapter.out.persistence.mysql.model.ComboModel;
 import br.com.fiap.soat07.techchallenge01.adapter.out.persistence.mysql.model.PedidoModel;
 import br.com.fiap.soat07.techchallenge01.adapter.out.persistence.mysql.model.ProdutoModel;
@@ -59,14 +64,33 @@ public class PedidoProviderImpl implements PedidoUseCase, CreatePedidoUseCase {
 	@Override
 	@Transactional
 	public Pedido create(Pedido pedido) {
-		Combo combo = pedido.getCombos().stream().findAny().orElseGet(null);
-		if(null != combo){
-			pedido.setNomeCliente(combo.getCliente().getNome());
+		List<Long> comboIds = pedido.getCombos().stream().map(Combo::getId).collect(Collectors.toList());
+
+		List<ComboModel> combos = comboIds.stream()
+			.map(comboId -> comboRepository.findById(comboId).orElseThrow(() -> new ComboNotFoundException(comboId)))
+			.collect(Collectors.toList());
+
+		String comboId = null;
+		ClienteModel cliente = null;
+		List<ProdutoModel> produtos = combos.stream().map(ComboModel::getProdutos).flatMap(Set::stream).collect(Collectors.toList());
+		
+		for (ComboModel combo : combos) {
+			cliente = combo.getCliente();
+			comboId = String.valueOf(combo.getId());
 		}
+
+		BigDecimal valorPedido = produtos.stream().map(ProdutoModel::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
 		PedidoModel pedidoModel = pedidoRepositoryMapper.toModel(pedido);
-		List<Produto> produtos = combo.getProdutos();
-		List<ProdutoModel> produtoModels = produtos.stream().map(produtoRepositoryMapper::toModel).collect(Collectors.toList());
-		pedidoModel.getProdutos().addAll(produtoModels);
+
+		if (!cliente.getNome().isBlank()) {
+			pedidoModel.setNomeCliente(cliente.getNome());
+		}
+
+		pedidoModel.setProdutos(produtos);
+		pedidoModel.setStatus(PedidoStatusEnum.INICIADO);
+		pedidoModel.setCodigo(comboId);
+		pedidoModel.setValor(valorPedido);
+
 		return pedidoRepositoryMapper.toDomain(pedidoRepository.save(pedidoModel));
 	}
 

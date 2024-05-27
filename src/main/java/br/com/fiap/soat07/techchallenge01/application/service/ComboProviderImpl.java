@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import br.com.fiap.soat07.techchallenge01.application.domain.entity.Combo;
 import br.com.fiap.soat07.techchallenge01.application.domain.entity.Produto;
 import br.com.fiap.soat07.techchallenge01.application.exception.ComboNotFoundException;
+import br.com.fiap.soat07.techchallenge01.application.exception.ProdutoDuplicadoComboException;
 import br.com.fiap.soat07.techchallenge01.application.ports.in.ComboUseCase;
 import br.com.fiap.soat07.techchallenge01.application.ports.out.persistence.ComboRepository;
 import br.com.fiap.soat07.techchallenge01.application.ports.out.persistence.CustomComboProdutosRepository;
@@ -47,7 +48,6 @@ public class ComboProviderImpl implements ComboUseCase {
 	public Page<Combo> getPageable(Pageable pageable) {
 		return new PageImpl<>(comboRepository.findAll(pageable).stream().map(comboMapper::toDomain).toList(), pageable,
 				comboRepository.findAll(pageable).getNumberOfElements());
-
 	}
 
 	@Override
@@ -73,22 +73,20 @@ public class ComboProviderImpl implements ComboUseCase {
 	@Transactional
 	public Combo update(long id, Combo comboAtualizado) {
 		
-		this.comboRepository.findById(id).orElseThrow(() -> new ComboNotFoundException(id));
+		ComboModel comboModel = this.comboRepository.findById(id).orElseThrow(() -> new ComboNotFoundException(id));
+
+		if (hasDuplicates(comboAtualizado.getProdutos().stream().map(p -> p.getTipoProduto()).toList())) throw new ProdutoDuplicadoComboException();
 		
-		if (hasDuplicates(comboAtualizado.getProdutos().stream().map(p -> p.getTipoProduto()).toList())) throw new RuntimeException(); //TODO create a specific exception
-		
-		List<Long> produtos = customComboProdutosRepository.getProdutosByComboId(id);
-				
-		customComboProdutosRepository.delete(id, produtos);
-		ComboModel comboModelAtualizado = ComboModel.builder()
-				.id(comboAtualizado.getId())
-				.nome(comboAtualizado.getNome())
-				.cliente( clienteMapper.toModel(comboAtualizado.getCliente()))
-				.produtos(comboAtualizado.getProdutos().stream().map(produtoMapper::toModel).collect(Collectors.toSet()))
-				.build();
+		List<ProdutoModel> produtosAntigo = customComboProdutosRepository.getProdutosByComboId(id);
+		List<Long> produtosAntigos = produtosAntigo.stream().map(ProdutoModel::getId).toList();
+		customComboProdutosRepository.delete(id, produtosAntigos);
+
+		List<ProdutoModel> produtos = comboAtualizado.getProdutos().stream().map(produtoMapper::toModel).toList();
+		Set<ProdutoModel> produtosModel = new HashSet<>(produtos);
+		comboModel.setProdutos(produtosModel);
 		
 		return comboMapper.toDomain(
-				comboRepository.saveAndFlush(comboModelAtualizado));
+				comboRepository.saveAndFlush(comboModel));
 	}
 
 	@Override
