@@ -1,19 +1,62 @@
-create database IF NOT EXISTS mydb;
+CREATE DATABASE IF NOT EXISTS mydb;
 USE mydb;
-create table clientes (id bigint not null auto_increment, codigo varchar(255), cpf varchar(255), data_criacao datetime(6) not null, nome varchar(255), ultima_modificacao datetime(6) not null, primary key (id)) engine=InnoDB;
-create table combo_produtos (comboid bigint not null, produtoid bigint not null, primary key (comboid, produtoid)) engine=InnoDB;
-create table combos (id bigint not null auto_increment, data_criacao datetime(6) not null, nome varchar(255), ultima_modificacao datetime(6) not null, cliente_id bigint, primary key (id)) engine=InnoDB;
-create table pedido_produtos (pedidoid bigint not null, produtoid bigint not null) engine=InnoDB;
-create table pedidos (id bigint not null auto_increment, codigo varchar(255), data_criacao datetime(6) not null, nome_cliente varchar(255), status enum ('INICIADO','PAGO','PREPARO','PRONTO','FINALIZADO'), ultima_modificacao datetime(6) not null, valor decimal(10,2), primary key (id)) engine=InnoDB;
-create table produtos (id bigint not null auto_increment, codigo varchar(255), data_criacao datetime(6) not null, data_exclusao datetime(6), nome varchar(255), tipo_produto enum ('LANCHE','ACOMPANHAMENTO','BEBIDA','SOBREMESA'), ultima_modificacao datetime(6) not null, valor decimal(10,2), primary key (id)) engine=InnoDB;
-alter table clientes drop index UK_7wflw78ibh162cmq12ii6ffly;
-alter table clientes add constraint UK_7wflw78ibh162cmq12ii6ffly unique (cpf);
-alter table produtos drop index UK_pk2k37y05kgqceufn556j55w3;
-alter table produtos add constraint UK_pk2k37y05kgqceufn556j55w3 unique (codigo);
-alter table produtos drop index UK_68les18ejq8cjyxw9snrbtd7t;
-alter table produtos add constraint UK_68les18ejq8cjyxw9snrbtd7t unique (nome);
-alter table combo_produtos add constraint FKd73mjma0bpqofc5xl813kv6sj foreign key (produtoid) references produtos (id);
-alter table combo_produtos add constraint FKh1c032u7k7uo92vk4f4ct2eqv foreign key (comboid) references combos (id);
-alter table combos add constraint FK4apeeplru304fy0mq364qx4r8 foreign key (cliente_id) references clientes (id);
-alter table pedido_produtos add constraint FKmxbuag3gvejqw28rs0mq5uxub foreign key (produtoid) references produtos (id);
-alter table pedido_produtos add constraint FK59k0dlxipto1kdpismergyxq8 foreign key (pedidoid) references pedidos (id);
+
+CREATE TABLE clientes (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    codigo VARCHAR(255),
+    cpf VARCHAR(255),
+    data_criacao DATETIME(6) NOT NULL,
+    nome VARCHAR(255),
+    ultima_modificacao DATETIME(6) NOT NULL,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE combo_produtos (
+    comboid BIGINT NOT NULL,
+    produtoid BIGINT NOT NULL,
+    PRIMARY KEY (comboid, produtoid)
+) ENGINE=InnoDB;
+
+CREATE TABLE combos (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    data_criacao DATETIME(6) NOT NULL,
+    nome VARCHAR(255),
+    ultima_modificacao DATETIME(6) NOT NULL,
+    cliente_id BIGINT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE pedido_produtos (
+    pedidoid BIGINT NOT NULL,
+    produtoid BIGINT NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE pedidos (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    codigo VARCHAR(255),
+    data_criacao DATETIME(6) NOT NULL,
+    nome_cliente VARCHAR(255),
+    status ENUM('INICIADO','PAGO','PREPARO','PRONTO','FINALIZADO'),
+    ultima_modificacao DATETIME(6) NOT NULL,
+    valor DECIMAL(10,2),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+CREATE TABLE produtos (
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    codigo VARCHAR(255),
+    data_criacao DATETIME(6) NOT NULL,
+    data_exclusao DATETIME(6),
+    nome VARCHAR(255),
+    tipo_produto ENUM('LANCHE','ACOMPANHAMENTO','BEBIDA','SOBREMESA'),
+    ultima_modificacao DATETIME(6) NOT NULL,
+    valor DECIMAL(10,2),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+ALTER TABLE clientes ADD CONSTRAINT UK_7wflw78ibh162cmq12ii6ffly UNIQUE (cpf);
+ALTER TABLE produtos ADD CONSTRAINT UK_pk2k37y05kgqceufn556j55w3 UNIQUE (codigo);
+ALTER TABLE produtos ADD CONSTRAINT UK_68les18ejq8cjyxw9snrbtd7t UNIQUE (nome);
+ALTER TABLE combo_produtos ADD CONSTRAINT FKd73mjma0bpqofc5xl813kv6sj FOREIGN KEY (produtoid) REFERENCES produtos (id);
+ALTER TABLE combo_produtos ADD CONSTRAINT FKh1c032u7k7uo92vk4f4ct2eqv FOREIGN KEY (comboid) REFERENCES combos (id);
+ALTER TABLE combos ADD CONSTRAINT FK4apeeplru304fy0mq364qx4r8 FOREIGN KEY (cliente_id) REFERENCES clientes (id);

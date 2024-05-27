@@ -8,16 +8,17 @@ spring:
     init:
       continue-on-error: false
       platform: mysql
+      schema-locations: classpath:schema.sql
+      data-locations: classpath:data.sql
+      mode: always
   data:
     jpa:
       repositories:
         enabled: true
   jpa:
     show-sql: true
-    generate-ddl: true
-    database: mysql
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         default_schema: public
@@ -27,7 +28,7 @@ application:
     username: ${DATABASE_USER_NAME:/home/app/src/main/resources/database/secret-db-username}
     password: ${DATABASE_USER_PASSWORD:/home/app/src/main/resources/database/secret-db-password}
     driver-class-name: ${DATABASE_DRIVER_CLASS_NAME:com.mysql.cj.jdbc.Driver}
-    url: ${DATABASE_URL:jdbc:mysql://mysqldb:3306/appdb?allowPublicKeyRetrieval=true}
+    url: ${DATABASE_URL:jdbc:mysql://mysqldb:3306/mydb?allowPublicKeyRetrieval=true}
     platform: ${DATABASE_PLATFORM:org.hibernate.dialect.MySQL5InnoDBDialect}
     
 info:
