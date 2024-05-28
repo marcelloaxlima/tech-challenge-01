@@ -39,4 +39,19 @@ public class CustomPedidoProdutosRepositoryImpl implements CustomPedidoProdutosR
 
 	}
 
+	@Override
+	@Transactional
+	public void save(long pedidoid, List<Long> produtoIds) {
+		String insertQuery = "INSERT INTO pedido_produtos (pedidoid, produtoid) VALUES (:pedidoid, :produtoid)";
+		
+		for (Long produtoId:produtoIds) {
+			entityManager.createNativeQuery(insertQuery)
+				.setParameter("pedidoid", pedidoid)
+				.setParameter("produtoid", produtoId)
+				.executeUpdate();
+		}
+		
+		entityManager.flush();
+	}
+
 }

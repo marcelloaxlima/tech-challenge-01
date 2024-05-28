@@ -56,9 +56,7 @@ public class ClienteController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClienteDTO> createCliente(@RequestBody final ClienteDTO clienteDTO) {
-    	
     	return ResponseEntity.ok(mapper.toDTO(clienteUseCase.create(mapper.toDomain(clienteDTO))));
-	
     }
 
     @Operation(
@@ -79,11 +77,8 @@ public class ClienteController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ClienteDTO> updateCliente(@PathVariable final Long id, @RequestBody final ClienteDTO clienteDTO) {
-    	
     	return ResponseEntity.ok(mapper.toDTO(clienteUseCase.update(id, mapper.toDomain(clienteDTO))));
-    	
     }
-
 
     @Operation(
       operationId = "deletar",

@@ -1,12 +1,11 @@
 package br.com.fiap.soat07.techchallenge01.application.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Component;
 
 import br.com.fiap.soat07.techchallenge01.application.domain.entity.Pagamento;
 import br.com.fiap.soat07.techchallenge01.application.domain.enumeration.PagamentoStatusEnum;
 import br.com.fiap.soat07.techchallenge01.application.domain.enumeration.PedidoStatusEnum;
+import br.com.fiap.soat07.techchallenge01.application.exception.PedidoNotFoundException;
 import br.com.fiap.soat07.techchallenge01.application.ports.out.pagamento.SistemaPagamento;
 import br.com.fiap.soat07.techchallenge01.application.ports.in.PagamentoUseCase;
 import br.com.fiap.soat07.techchallenge01.application.ports.out.persistence.PedidoRepository;
@@ -23,8 +22,7 @@ public class PagamentoProviderImpl implements PagamentoUseCase {
 	
 	@Override
 	public Pagamento executar(Pagamento pagamento) {
-		Optional<PedidoModel> pedidoModelOption = this.pedidoRepository.findById(pagamento.getPedidoId());
-		PedidoModel pedidoModel = pedidoModelOption.orElseThrow(() -> new RuntimeException());
+		PedidoModel pedidoModel = pedidoRepository.findById(pagamento.getPedidoId()).orElseThrow(() -> new PedidoNotFoundException(pagamento.getPedidoId()));
 				
 		try {			
 			PagamentoStatusEnum status = sistemaPagamento.executar(pagamento);

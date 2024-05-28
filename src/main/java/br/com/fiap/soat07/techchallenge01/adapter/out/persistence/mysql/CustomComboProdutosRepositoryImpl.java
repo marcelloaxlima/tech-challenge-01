@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import br.com.fiap.soat07.techchallenge01.adapter.out.persistence.mysql.model.ProdutoModel;
 import br.com.fiap.soat07.techchallenge01.application.ports.out.persistence.CustomComboProdutosRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -31,12 +32,12 @@ public class CustomComboProdutosRepositoryImpl implements CustomComboProdutosRep
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Long> getProdutosByComboId(long comboId) {
+	public List<ProdutoModel> getProdutosByComboId(long comboId) {
 		String query = "SELECT produtoid FROM combo_produtos WHERE comboid = :comboid";
-		return entityManager.createNativeQuery(query, Long.class)
+		List<Long> produtos = entityManager.createNativeQuery(query, Long.class)
         .setParameter("comboid", comboId)
         .getResultList();
 
+		return produtos.stream().map(produtoId -> entityManager.find(ProdutoModel.class, produtoId)).toList();
 	}
-
 }

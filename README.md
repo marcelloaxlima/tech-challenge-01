@@ -6,11 +6,11 @@ A porta 8080 é destinada a API RESTful, e a porta 3306 para o banco de dados.
 
 ### Subindo o ambiente
 
-Certifique=se que as portas 8080 e 3306 estão disponíveis para subir os containers Docker.
+Certifique-se que as portas 8080 e 3306 estão disponíveis para subir os containers Docker.
 
 Para subir os containers rode o seguinte comando:
 
-``` docker-compose up -d ```
+``` docker-compose up --build -d ```
 
 Após o build e o up dos containers a aplicação estará disponível em:
 
@@ -24,8 +24,28 @@ Você pode acessar o Swagger pelo link:
 
 http://localhost:8080/tech-challenge-01/swagger-ui/index.html
 
-Também foi disponibilizado uma collection do **postman**, no diretório .postman na raiz do projeto.
+A Collection do **postman** com todas as endpoints necessárias, esta no diretório .postman na raiz do projeto.
 
+Você poderá fazer o download da Collection [aqui](/.postman/Tech Challenge.postman_collection.json) e as Environment [aqui](/.postman/Tech Challenge.postman_environment.json).
+
+As environment é importante para o fluxo da API, pois os IDs do cliente, combo, pedido são armazenados nas variáveis de ambiente para facilitar o uso.
+
+### Event Storm
+
+O Event Storm desenvolvido e utilizado para o desenvolvimento deste projeto esta no link abaixo:
+
+https://miro.com/welcomeonboard/dDduRUxZVVo1SWtzSWdVZVBwTU5SUmdNOE83MGc2SVUxV3gzd2kxNTlUM081MHEwODByRHFraG1XUXFCRUFUQXwzNDU4NzY0NTIyNzA2NTA5MDU0fDI=?share_link_id=191676060471
+
+### Fluxo da API
+
+Ao subir o container o banco de dados será automaticamente criado com produtos de exemplo já cadastrados.
+
+- (optional) Cadastrar Produtos
+- Cadastrar o Cliente
+- Criar um Combo
+- Adicionar os Produtos ao Combo
+- Criar o Pedido
+- Realizar o Pagamento
 
 ## Linguagem Ubíqua
 
