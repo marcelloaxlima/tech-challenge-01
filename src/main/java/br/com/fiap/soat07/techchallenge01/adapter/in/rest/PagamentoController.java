@@ -44,7 +44,7 @@ public class PagamentoController {
               { @Content(mediaType = "application/json", schema = 
                 @Schema(implementation = ErrorResponse.class)) }) })
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<PagamentoDTO> createProduto(@RequestBody final PagamentoDTO pagamentoDTO) {
+    public ResponseEntity<PagamentoDTO> createPagamento(@RequestBody final PagamentoDTO pagamentoDTO) {
     	
     	return ResponseEntity.ok(mapper.toDTO(pagamentoUseCase.executar(mapper.toDomain(pagamentoDTO))));
 	

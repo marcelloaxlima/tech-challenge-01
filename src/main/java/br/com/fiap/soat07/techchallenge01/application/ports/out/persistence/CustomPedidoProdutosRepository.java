@@ -9,4 +9,5 @@ public interface CustomPedidoProdutosRepository {
 	
 	List<Long> getProdutosByPedidoId(long pedidoid);
 
+	void save(long pedidoid, List<Long> produtoIds);
 }

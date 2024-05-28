@@ -21,7 +21,7 @@ public interface ProdutoRepository extends JpaRepository<ProdutoModel, Long> {
 
     @Override
     @Query(
-            value = "SELECT * FROM PRODUTOS p WHERE p.id = ?1",
+            value = "SELECT * FROM produtos p WHERE p.id = ?1",
             nativeQuery = true)
     Optional<ProdutoModel> findById(Long id);
 
