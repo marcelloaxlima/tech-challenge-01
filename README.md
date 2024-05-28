@@ -26,7 +26,7 @@ http://localhost:8080/tech-challenge-01/swagger-ui/index.html
 
 A Collection do **postman** com todas as endpoints necessárias, esta no diretório .postman na raiz do projeto.
 
-Você poderá fazer o download da Collection <a href="/.postman/Tech Challenge.postman_collection.json" target="blank">aqui</a> e as Environment <a href="/.postman/Tech Challenge.postman_environment.json">aqui</a>.
+Você poderá fazer o download da Collection <a target="_blank" href="/.postman/Tech Challenge.postman_collection.json" target="blank">aqui</a> e as Environment <a target="_blank" href="/.postman/Tech Challenge.postman_environment.json">aqui</a>.
 
 As environment é importante para o fluxo da API, pois os IDs do cliente, combo, pedido são armazenados nas variáveis de ambiente para facilitar o uso.
 
