@@ -66,6 +66,8 @@ public class ComboProviderImpl implements ComboUseCase {
 
 	@Override
 	public Combo create(Combo combo) {
+		
+		if (hasDuplicates(combo.getProdutos().stream().map(p -> p.getTipoProduto()).toList())) throw new ProdutoDuplicadoComboException();
 		return comboMapper.toDomain(comboRepository.save(comboMapper.toModel(combo)));
 	}
 

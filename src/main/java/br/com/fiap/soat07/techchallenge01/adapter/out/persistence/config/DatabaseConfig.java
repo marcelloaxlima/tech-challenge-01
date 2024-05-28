@@ -46,6 +46,7 @@ public class DatabaseConfig {
 		return new HikariDataSource(hikariConfig);
 	}
 
+	/*
 	@Bean
 	@DependsOn("dataSource")
 	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
@@ -66,7 +67,7 @@ public class DatabaseConfig {
 		""");
 		return new JdbcTemplate(dataSource);
 	}
-	
+	*/
 	private String getUsername() {
 		
 		return readFromFile(userName);
