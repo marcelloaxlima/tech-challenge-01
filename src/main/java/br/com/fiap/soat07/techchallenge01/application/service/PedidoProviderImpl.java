@@ -86,7 +86,7 @@ public class PedidoProviderImpl implements PedidoUseCase, CreatePedidoUseCase {
 		BigDecimal valorPedido = produtos.stream().map(ProdutoModel::getValor).reduce(BigDecimal.ZERO, BigDecimal::add);
 		PedidoModel pedidoModel = pedidoRepositoryMapper.toModel(pedido);
 
-		if (!cliente.getNome().isBlank()) {
+		if (cliente != null && !cliente.getNome().isBlank()) {
 			pedidoModel.setNomeCliente(cliente.getNome());
 		}
 
