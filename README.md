@@ -75,3 +75,10 @@ Ao subir o container o banco de dados será automaticamente criado com produtos 
 
 **QRCode**, um código de barras no formato 2d gerado pela plataforma de pagamento, que permite o pagamento.
 
+
+### Alunos - 7SOAT
+
+- Fabio Henrique Peixoto da Silva - 
+- Marcello de Almeida Lima - RM355880
+- Matheus Tadeu Moreira da Cunha - RM355524
+- Eduardo Fabris - RM356333
