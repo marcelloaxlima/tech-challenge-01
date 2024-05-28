@@ -6,7 +6,7 @@ spring:
     name: tech-challenge-01
   sql:
     init:
-      continue-on-error: false
+      continue-on-error: true
       platform: mysql
       schema-locations: classpath:schema.sql
       data-locations: classpath:data.sql

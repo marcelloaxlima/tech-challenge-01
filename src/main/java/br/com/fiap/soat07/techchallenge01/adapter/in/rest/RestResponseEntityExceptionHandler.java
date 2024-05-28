@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.fiap.soat07.techchallenge01.adapter.in.rest.dto.ErroTemplateDTO;
+import br.com.fiap.soat07.techchallenge01.application.exception.BusinessException;
 import br.com.fiap.soat07.techchallenge01.application.exception.ResourceNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,9 +28,33 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
 	@ExceptionHandler(value = { ResourceNotFoundException.class })
 	protected ResponseEntity<Object> handleNotFound(RuntimeException ex, WebRequest request) {
+		String bodyOfResponse = buildError(ex, HttpStatus.NOT_FOUND);
+		
+		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+	}
+
+	@ExceptionHandler(value = { BusinessException.class })
+	protected ResponseEntity<Object> handleBusinessException(RuntimeException ex, WebRequest request) {
+		String bodyOfResponse = buildError(ex, HttpStatus.valueOf(422));
+		
+		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.valueOf(422), request);
+	}
+	
+	@ExceptionHandler(value = { RuntimeException.class })
+	protected ResponseEntity<Object> handleGenericException(RuntimeException ex, WebRequest request) {
+		String bodyOfResponse = buildError(ex, HttpStatus.INTERNAL_SERVER_ERROR);
+		
+		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
+	
+	
+	
+	
+	
+	private String buildError(RuntimeException ex, HttpStatus httpStatus) {
 		ErroTemplateDTO errorTemplate = ErroTemplateDTO.builder()
 				.message(ex.getMessage())
-				.httpStatus(HttpStatus.NOT_FOUND)
+				.httpStatus(httpStatus)
 				.build();
 		String bodyOfResponse = String.format ("{%s}", ex.getMessage());
 
@@ -38,8 +63,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 		} catch (JsonProcessingException e) {
 			log.warn("Error parsing ErroTemplate");
 		}
-		
-		return handleExceptionInternal(ex, bodyOfResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+		return bodyOfResponse;
 	}
 
 }
