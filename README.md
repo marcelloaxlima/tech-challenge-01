@@ -78,7 +78,7 @@ Ao subir o container o banco de dados será automaticamente criado com produtos 
 
 ### Alunos - 7SOAT
 
-- Fabio Henrique Peixoto da Silva - 
+- Fabio Henrique Peixoto da Silva - RM354678 
 - Marcello de Almeida Lima - RM355880
 - Matheus Tadeu Moreira da Cunha - RM355524
 - Eduardo Fabris - RM356333
