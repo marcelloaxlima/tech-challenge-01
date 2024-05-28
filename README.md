@@ -4,6 +4,31 @@ Este projeto foi desenvolvido com o Framework Spring na linguagem JAVA e banco d
 
 A porta 8080 é destinada a API RESTful, e a porta 3306 para o banco de dados.
 
+### Objetivo do Projeto
+
+O projeto trata-se de um sistema para gestão e emissão de pedidos para uma Lanchonete. 
+O projeto acontece em 3 fases:
+
+- Indentificação do Cliente
+
+    Nesta etapa, realizamos a indentificação do cliente. Ele poderá se cadastrar ou escolher prosseguir sem cadastro.
+    Ao se cadastrar é solicitado Nome, Email e CPF. Caso decida não se cadastrar, a montagem e emissão do pedido utiliza como chave o ID do combo, que será retornado ao cliente acompanhar o andamento do Pedido.
+
+- Montagem do Combo
+
+    Inicialmente, cria-se um combo vazio, e após selecionar os produtos, utilizamos a endpoint para adicionar a lista de produtos ao Combo.
+    Não é permitido inserir mais de 1 produto do mesmo tipo.
+
+- Geração do Pedido
+
+    Nesta etapa, informamos o ID do combo para gerar o Pedido com status INICIADO, aguardando o Pagamento.
+
+- Checkout
+
+    Após gerar o pedido, é necessário consumir a endpoint POST /pagamento, informando o ID do pedido.
+    Se tudo ocorrer bem, ao consultar o Pedido, o mesmo deverá estar com status PAGO, pronto para ser enviado para confecção.
+
+
 ### Subindo o ambiente
 
 Certifique-se que as portas 8080 e 3306 estão disponíveis para subir os containers Docker.
@@ -36,16 +61,6 @@ O Event Storm desenvolvido e utilizado para o desenvolvimento deste projeto esta
 
 https://miro.com/welcomeonboard/dDduRUxZVVo1SWtzSWdVZVBwTU5SUmdNOE83MGc2SVUxV3gzd2kxNTlUM081MHEwODByRHFraG1XUXFCRUFUQXwzNDU4NzY0NTIyNzA2NTA5MDU0fDI=?share_link_id=191676060471
 
-### Fluxo da API
-
-Ao subir o container o banco de dados será automaticamente criado com produtos de exemplo já cadastrados.
-
-- (optional) Cadastrar Produtos
-- Cadastrar o Cliente
-- Criar um Combo
-- Adicionar os Produtos ao Combo
-- Criar o Pedido
-- Realizar o Pagamento
 
 ## Linguagem Ubíqua
 
