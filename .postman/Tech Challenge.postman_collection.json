@@ -12,12 +12,24 @@
 			"item": [
 				{
 					"name": "Cadastrar Cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable('clienteId', JSON.parse(responseBody).id); "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"nome\": \"Cliente Teste 1\",\r\n  \"cpf\": \"07003374072\"\r\n}",
+							"raw": "{\r\n  \"nome\": \"Cliente Teste 2\",\r\n  \"cpf\": \"76899046024\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -35,6 +47,41 @@
 				},
 				{
 					"name": "Buscar por CPF",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable('clienteId', JSON.parse(responseBody).id); "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tech_challenge_url}}cliente/cpf/76899046024",
+							"host": [
+								"{{tech_challenge_url}}cliente"
+							],
+							"path": [
+								"cpf",
+								"76899046024"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Buscar Produtos",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -51,20 +98,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{tech_challenge_url}}cliente/cpf/39223633850",
+							"raw": "{{tech_challenge_url}}produto",
 							"host": [
-								"{{tech_challenge_url}}cliente"
-							],
-							"path": [
-								"cpf",
-								"39223633850"
+								"{{tech_challenge_url}}produto"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Buscar por CPF Copy",
+					"name": "Buscar Produtos por Categoria",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -81,13 +124,334 @@
 							}
 						},
 						"url": {
-							"raw": "{{tech_challenge_url}}cliente/cpf/39223633850",
+							"raw": "{{tech_challenge_url}}produto?tipoProduto=LANCHE",
 							"host": [
-								"{{tech_challenge_url}}cliente"
+								"{{tech_challenge_url}}produto"
+							],
+							"query": [
+								{
+									"key": "tipoProduto",
+									"value": "LANCHE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cadastrar Produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"X-Saldada\",\r\n  \"codigo\": \"LANXS\",\r\n  \"valor\": 8.50,\r\n  \"tipoProduto\": \"LANCHE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}produto",
+							"host": [
+								"{{tech_challenge_url}}produto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Produto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"X-Saldada\",\r\n  \"codigo\": \"LANXS\",\r\n  \"valor\": 9.50,\r\n  \"tipoProduto\": \"LANCHE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}produto/11",
+							"host": [
+								"{{tech_challenge_url}}produto"
 							],
 							"path": [
-								"cpf",
-								"39223633850"
+								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar Produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nome\": \"X-Saldada\",\r\n  \"codigo\": \"LANXS\",\r\n  \"valor\": 9.50,\r\n  \"tipoProduto\": \"LANCHE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}produto/11",
+							"host": [
+								"{{tech_challenge_url}}produto"
+							],
+							"path": [
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Combo",
+			"item": [
+				{
+					"name": "Criar Combo com Cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable('comboId', JSON.parse(responseBody).id); "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"cliente\": {\r\n    \"id\": {{clienteId}}\r\n  }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}combo",
+							"host": [
+								"{{tech_challenge_url}}combo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar Combo Sem Cliente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable('comboId', JSON.parse(responseBody).id); "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}combo",
+							"host": [
+								"{{tech_challenge_url}}combo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar ou Atualizar Produtos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"produtos\": [\r\n    {\r\n        \"id\": 1,\r\n        \"nome\": \"Hamburger\",\r\n        \"codigo\": \"LAN01\",\r\n        \"valor\": 5.50,\r\n        \"tipoProduto\": \"LANCHE\"\r\n    },\r\n    {\r\n        \"id\": 3,\r\n        \"nome\": \"Batata Frita\",\r\n        \"codigo\": \"ACO01\",\r\n        \"valor\": 4.00,\r\n        \"tipoProduto\": \"ACOMPANHAMENTO\"\r\n    },\r\n    {\r\n        \"id\": 6,\r\n        \"nome\": \"Guaraná\",\r\n        \"codigo\": \"BEB02\",\r\n        \"valor\": 1.00,\r\n        \"tipoProduto\": \"BEBIDA\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}combo/{{comboId}}",
+							"host": [
+								"{{tech_challenge_url}}combo"
+							],
+							"path": [
+								"{{comboId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Combo",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"produtos\": [\r\n    {\r\n        \"id\": 2,\r\n        \"nome\": \"X-Hamburger\"\r\n    },\r\n    {\r\n        \"id\": 3,\r\n        \"nome\": \"Batata Frita\"\r\n    },\r\n    {\r\n        \"id\": 5,\r\n        \"nome\": \"Coca Cola\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}combo/{{comboId}}",
+							"host": [
+								"{{tech_challenge_url}}combo"
+							],
+							"path": [
+								"{{comboId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "Criar Pedido",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable('pedidoId', JSON.parse(responseBody).id); "
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"combos\": [\r\n    {\r\n      \"id\": {{comboId}}\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}pedido",
+							"host": [
+								"{{tech_challenge_url}}pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Pedido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tech_challenge_url}}pedido/{{pedidoId}}",
+							"host": [
+								"{{tech_challenge_url}}pedido"
+							],
+							"path": [
+								"{{pedidoId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagamento",
+			"item": [
+				{
+					"name": "Realizar Pagamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pedidoId\": {{pedidoId}},\r\n    \"provedorServiço\": \"MERCADO_PAGO\",\r\n    \"metodoPagamento\": \"QRCODE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{tech_challenge_url}}pagamento",
+							"host": [
+								"{{tech_challenge_url}}pagamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Pagamento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{tech_challenge_url}}pagamento/1",
+							"host": [
+								"{{tech_challenge_url}}pagamento"
+							],
+							"path": [
+								"1"
 							]
 						}
 					},
