@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-deployment
+  template:
+    metadata:
+      labels:
+        app: mysql-deployment
+    spec:
+      containers:
+        - name: mysql-container
+          image: mysql:8.0
+          envFrom:
+            - secretRef:
+                name: secret-mysql
+          ports:
+            - containerPort: 3306
+      volumes:
+        - name: pvc-mysql
+          persistentVolumeClaim:
+            claimName: pvc-mysql
+
