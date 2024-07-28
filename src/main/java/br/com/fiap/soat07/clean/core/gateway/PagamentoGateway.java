@@ -10,14 +10,10 @@ import java.util.Optional;
 
 public interface PagamentoGateway {
 
-	/**
-	 * Executar pagamento
-	 * @param pagamento {@link Pagamento}
-	 * @return {@link PagamentoStatusEnum}
-	 */
-	PagamentoStatusEnum executar(Pagamento pagamento);
+	PagamentoStatusEnum getSituacao(Pagamento pagamento);
 
-	PagamentoStatusEnum getSituacao(String codigo);
+	Pagamento create(Pedido pedido);
 
-	String getTransaction(MetodoPagamentoEnum metodo, BigDecimal valor);
+	String getQRCode(Pagamento pagamento);
+
 }

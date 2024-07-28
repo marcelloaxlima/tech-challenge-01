@@ -52,7 +52,6 @@ public class ClienteController {
       @ApiResponse(responseCode = "500", description = "Internal server error", content = 
         { @Content(mediaType = "application/json", schema = 
           @Schema(implementation = ErrorResponse.class)) }) })
-
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<ClienteDTO> createCliente(@RequestBody final ClienteDTO clienteDTO) {

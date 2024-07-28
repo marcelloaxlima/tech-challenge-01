@@ -89,7 +89,7 @@ public class CreateComboUseCase {
         for (Produto p : produtos)
             combo.getProdutos().add(p);
 
-        comboGateway.save(combo);
+        combo = comboGateway.save(combo);
         return combo;
     }
 

@@ -3,6 +3,8 @@ package br.com.fiap.soat07.clean.infra.repository.mysql;
 import br.com.fiap.soat07.clean.core.domain.entity.Pagamento;
 import br.com.fiap.soat07.clean.core.domain.entity.Pedido;
 import br.com.fiap.soat07.clean.core.domain.entity.Produto;
+import br.com.fiap.soat07.clean.core.domain.enumeration.PedidoStatusEnum;
+import br.com.fiap.soat07.clean.core.domain.enumeration.ProvedorPagamentoEnum;
 import br.com.fiap.soat07.clean.core.exception.ComboNotFoundException;
 import br.com.fiap.soat07.clean.core.exception.PedidoNotFoundException;
 import br.com.fiap.soat07.clean.core.gateway.PedidoGateway;
@@ -69,6 +71,27 @@ public class PedidoRepository implements PedidoGateway {
     @Override
     public Optional<Pedido> findById(long id) {
         return _findById(id).map(c -> pedidoMapper.toDomain(c));
+    }
+
+    @Override
+    public Optional<Pagamento> findPagamento(ProvedorPagamentoEnum provedor, String id) {
+        final String hql = """
+            SELECT p
+            FROM PedidoModel p
+            WHERE p.provedor = :provedor
+              AND p.transactionCode = :id
+            """;
+
+        try {
+            PedidoModel model = (PedidoModel) entityManager.createQuery(hql, PedidoModel.class)
+                    .setParameter("provedor", provedor)
+                    .setParameter("id", id)
+                    .getSingleResult();
+
+            return Optional.of(pedidoMapper.toDomainPagamento(model));
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     @Override
@@ -189,12 +212,15 @@ public class PedidoRepository implements PedidoGateway {
             SELECT p
             FROM PedidoModel p
             WHERE 1 = 1
+              AND p.status <> :situacao
+            ORDER BY p.dataCriacao DESC
             """;
         pageNumber = Math.max(pageNumber, 1);
         pageSize = Math.max(pageSize, 1);
         int firstResult = (pageNumber - 1) * pageSize;
 
         List<PedidoModel> result = entityManager.createQuery(hql, PedidoModel.class)
+                .setParameter("situacao", PedidoStatusEnum.FINALIZADO)
                 .setFirstResult(firstResult)
                 .setMaxResults(pageSize)
                 .getResultList();

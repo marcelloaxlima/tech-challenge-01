@@ -26,4 +26,10 @@ public class Pagamento {
 	private LocalDate data;
 	private BigDecimal valor;
 
+	public Pagamento(Pedido pedido) {
+		this.pedidoId = pedido.getId();
+		this.status = PagamentoStatusEnum.NAO_CONCLUIDO;
+	}
+
+
 }

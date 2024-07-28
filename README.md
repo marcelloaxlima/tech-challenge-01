@@ -91,6 +91,58 @@ https://miro.com/welcomeonboard/dDduRUxZVVo1SWtzSWdVZVBwTU5SUmdNOE83MGc2SVUxV3gz
 **QRCode**, um código de barras no formato 2d gerado pela plataforma de pagamento, que permite o pagamento.
 
 
+## Principais endpoints
+
+Criação de cliente
+```
+POST /cliente
+```
+
+1. Criação do combo
+```
+POST /combo
+```
+```json
+{
+  "cliente": {
+    "id": 16
+  },
+  "produtos": [
+    {"id": 3}
+  ]
+}
+```
+
+2. Se o cliente.id for null, será criado um cliente anonimo.
+O cliente interage com o combo, podendo incluir, excluir e alterar produtos
+
+3. No momento que o cliente decide que montou o combo que deseja ele transforma o combo num pedido
+Esse endpoint cria um novo pedido com base no combo indicado no {id}
+```
+POST /pedido/{id}
+```
+
+4. Depois de criado o pedido, é gerado um pagamento de acordo com os parametros escolhidos
+```
+POST /pedido/{id}/pagamento
+```
+
+
+5. O sistema gera o QRCode para pagamento do Mercado Pago
+```
+POST /pedido/{id}/qrcode
+```
+
+6. A situação do pedido é alterada quando o webhook do Mercado Pago é chamado
+```
+POST /pagamento/mercadopago/webhook
+```
+
+
+
+
+
+
 ### Alunos - 7SOAT
 
 - Fabio Henrique Peixoto da Silva - RM354678 
