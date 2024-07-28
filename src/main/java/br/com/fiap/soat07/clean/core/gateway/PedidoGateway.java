@@ -4,6 +4,7 @@ import br.com.fiap.soat07.clean.core.domain.entity.Combo;
 import br.com.fiap.soat07.clean.core.domain.entity.Pagamento;
 import br.com.fiap.soat07.clean.core.domain.entity.Pedido;
 import br.com.fiap.soat07.clean.core.domain.entity.Produto;
+import br.com.fiap.soat07.clean.core.domain.enumeration.ProvedorPagamentoEnum;
 import org.springframework.data.domain.Page;
 
 import java.util.Collection;
@@ -20,6 +21,8 @@ public interface PedidoGateway {
 
     Optional<Pedido> findByCombo(long id);
 
+    Optional<Pagamento> findPagamento(ProvedorPagamentoEnum provedor, String id);
+
     Optional<Pagamento> findPagamento(Pedido pedido);
 
     Pedido save(Pedido pedido);
@@ -30,7 +33,6 @@ public interface PedidoGateway {
 
     void deleteProduto(Pedido pedido, Produto produto);
 
-//    void save(long pedidoid, List<Long> produtoIds);
 
     /**
      * Get pageable

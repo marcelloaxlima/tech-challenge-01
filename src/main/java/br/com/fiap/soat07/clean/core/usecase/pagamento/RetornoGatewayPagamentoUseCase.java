@@ -12,18 +12,18 @@ import java.util.Optional;
 
 public class RetornoGatewayPagamentoUseCase {
 
-	private final PedidoGateway pedidoGateway;
 	private final PagamentoGateway pagamentoGateway;
 
-	public RetornoGatewayPagamentoUseCase(PedidoGateway pedidoGateway, PagamentoGateway pagamentoGateway) {
-		this.pedidoGateway = pedidoGateway;
+	public RetornoGatewayPagamentoUseCase(PagamentoGateway pagamentoGateway) {
 		this.pagamentoGateway = pagamentoGateway;
 	}
 
-	public PagamentoStatusEnum executar(Pedido pedido) {
+	public PagamentoStatusEnum executar(Pagamento pagamento) {
+		return pagamentoGateway.getSituacao(pagamento);
+	}
 
-		return pagamentoGateway.getSituacao(pedido.getCodigo());
-
+	public String qrcode(Pagamento pagamento) {
+		return pagamentoGateway.getQRCode(pagamento);
 	}
 
 }

@@ -1,6 +1,5 @@
 package br.com.fiap.soat07.clean.infra.service;
 
-import br.com.fiap.soat07.clean.core.gateway.ProdutoGateway;
 import br.com.fiap.soat07.clean.core.usecase.produto.CreateProdutoUseCase;
 import br.com.fiap.soat07.clean.core.usecase.produto.DeleteProdutoUseCase;
 import br.com.fiap.soat07.clean.core.usecase.produto.SearchProdutoUseCase;
