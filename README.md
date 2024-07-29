@@ -90,6 +90,10 @@ https://miro.com/welcomeonboard/dDduRUxZVVo1SWtzSWdVZVBwTU5SUmdNOE83MGc2SVUxV3gz
 
 **QRCode**, um código de barras no formato 2d gerado pela plataforma de pagamento, que permite o pagamento.
 
+### Arquitetura do Projeto
+
+<img src=".doc/diagrama-arquitetura.drawio.png">
+
 ### Infra estrutura
 
 <img src=".doc/diagrama-infra.drawio.png">
