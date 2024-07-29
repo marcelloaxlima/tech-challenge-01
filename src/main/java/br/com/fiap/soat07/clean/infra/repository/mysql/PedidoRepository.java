@@ -97,6 +97,8 @@ public class PedidoRepository implements PedidoGateway {
     @Override
     public Optional<Pagamento> findPagamento(Pedido pedido) {
         PedidoModel pedidoModel = _findById(pedido.getId()).orElseThrow(() -> new PedidoNotFoundException(pedido.getId()));
+        if (pedidoModel.getProvedor() == null)
+            return Optional.empty();
         Pagamento pagamento = pedidoMapper.toDomainPagamento(pedidoModel);
         return Optional.ofNullable(pagamento);
     }
@@ -167,6 +169,7 @@ public class PedidoRepository implements PedidoGateway {
             model.setProvedor(pagamento.getProvedorServico());
             model.setMetodo(pagamento.getMetodoPagamento());
             model.setTransactionCode(pagamento.getId());
+            model.setPagamentoStatus(pagamento.getStatus());
 
             entityManager.persist(model);
 
@@ -175,6 +178,7 @@ public class PedidoRepository implements PedidoGateway {
             model.setProvedor(pagamento.getProvedorServico());
             model.setMetodo(pagamento.getMetodoPagamento());
             model.setTransactionCode(pagamento.getId());
+            model.setPagamentoStatus(pagamento.getStatus());
 
             entityManager.merge(model);
         }

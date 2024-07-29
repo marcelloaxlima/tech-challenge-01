@@ -40,7 +40,7 @@ public class MercadoPagoController {
     }
 
     private MercadoPagoStatus extractPagamentoStatus(MercadoPagoPagamentoDTO pagamentoDTO) {
-        return MercadoPagoStatus.parse(pagamentoDTO.getStatus()).orElseThrow(() -> new IllegalStateException("Status: "+pagamentoDTO.getStatus()+" não encontrado"));
+        return MercadoPagoStatus.parse(pagamentoDTO.getStatus()).orElse(MercadoPagoStatus.PENDENTE);
     }
 
 
@@ -54,7 +54,7 @@ public class MercadoPagoController {
             @ApiResponse(responseCode = "500", description = "Internal server error", content =
                     { @Content(mediaType = "application/json", schema =
                     @Schema(implementation = ErrorResponse.class)) }) })
-    @PostMapping(value="/webhook", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="/webhook", consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<PagamentoDTO> webhook(@RequestBody final MercadoPagoPagamentoDTO pagamentoDTO) {
 
@@ -65,7 +65,7 @@ public class MercadoPagoController {
 
         PagamentoStatusEnum status = pagamento.getStatus();
         PagamentoStatusEnum statusAtual = extractPagamentoStatus(pagamentoDTO).getPagamentoStatus();
-        if (status.equals(statusAtual))
+        if (statusAtual.equals(status))
             return ResponseEntity.noContent().build();
 
         pagamento = pagamentoService.getUpdatePagamentoUseCase().executar(pedido, pagamento, statusAtual);
