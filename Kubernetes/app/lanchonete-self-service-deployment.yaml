@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: lanchonete-self-service-container
-          image: matheustadeulm/lanchonete-self-service-api:1
+          image: matheustadeulm/lanchonete-self-service-api:2
           ports:
             - containerPort: 8080
           envFrom:
