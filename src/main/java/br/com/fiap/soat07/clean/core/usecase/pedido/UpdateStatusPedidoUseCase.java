@@ -20,7 +20,7 @@ public class UpdateStatusPedidoUseCase {
         if (pedido.getStatus().isFinalizado())
             throw new PedidoSituacaoInvalidaException("Pedido está finalizado");
 
-        if (pedido.getStatus().getStep() < status.getStep())
+        if (pedido.getStatus().getStep() > status.getStep())
             throw new PedidoSituacaoInvalidaException("Pedido está na situação "+pedido.getStatus()+" e não pode ser atualizado para "+status);
 
         pedido.setStatus(status);
