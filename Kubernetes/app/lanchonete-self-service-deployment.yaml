@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lanchonete-self-service-deployment
+  labels:
+    app: lanchonete-self-service-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lanchonete-self-service-deployment
+  template:
+    metadata:
+      labels:
+        app: lanchonete-self-service-deployment
+    spec:
+      containers:
+        - name: lanchonete-self-service-container
+          image: matheustadeulm/lanchonete-self-service-api:2
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: secret-db-app
+          livenessProbe:
+            httpGet:
+              path: /tech-challenge-01/swagger-ui/index.html
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /tech-challenge-01/produto/1
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: 500m
+      volumes:
+        - name: m2-volume
+          hostPath:
+            path: /root/.m2
+
