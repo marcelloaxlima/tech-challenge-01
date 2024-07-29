@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class MercadoPagoPagamentoDTO {
 	
-	private Long id;
+	private String id;
 	private String status;
 
 }

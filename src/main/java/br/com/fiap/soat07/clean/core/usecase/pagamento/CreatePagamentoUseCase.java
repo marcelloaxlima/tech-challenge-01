@@ -35,7 +35,7 @@ public class CreatePagamentoUseCase {
 			PagamentoStatusEnum status = pagamentoGateway.getSituacao(pagamento);
 			pagamento.setStatus(status);
 		}
-		pedidoGateway.save(pedido, pagamento);
+		pagamento = pedidoGateway.save(pedido, pagamento);
 
 		return pagamento;
 	}

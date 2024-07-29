@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class PagamentoDTO {
 	
-	private Long id;
+	private String id;
 	private Long pedidoId;
 	private PagamentoStatusEnum status;
 	private ProvedorPagamentoEnum provedorServico;
