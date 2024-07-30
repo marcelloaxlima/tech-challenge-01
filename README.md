@@ -39,7 +39,7 @@ O projeto acontece em 3 fases:
 
 ### Video de Apresentação
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hTunl4YVG3U?si=5yO_kQVDNxUfHQGX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<a href="https://youtu.be/hTunl4YVG3U"><img src=".doc/video-thumbnail.jpg" width="600"></a>
 
 Caso tenha problemas para visualizar o vídeo <a href="https://youtu.be/hTunl4YVG3U">CLIQUE AQUI</a>
 
